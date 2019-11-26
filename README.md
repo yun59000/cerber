@@ -1,4 +1,4 @@
-# Cerberus Docker files
+#Cerberus Docker files
 
 [Cerberus](http://www.cerberus-testing.org/) is an user-friendly automated testing framework.
 
