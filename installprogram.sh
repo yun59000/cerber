@@ -144,11 +144,11 @@ if [ "$REPLY" = "y" ]; then
             # -o = Redirects the HTML output to /dev/null
        if [ "$access" = "200" ]
        then
-            (echo ("$timestamp --------Cerberus is Up and Runnin---------") 2>&1 ) >> "log.txt"
+            (echo "$timestamp --------Cerberus is Up and Runnin---------" 2>&1 ) >> "log.txt"
             tail -1 "log.txt"
             nb_try=30
         else
-            (echo ("$timestamp --------access $(( nb_try * 10 )) sec -----average is 3min : 180 sec--please wait") 2>&1 ) >> "log.txt"
+            (echo "$timestamp --------access $(( nb_try * 10 )) sec -----average is 3min : 180 sec--please wait" 2>&1 ) >> "log.txt"
             tail -1 "log.txt"
             nb_try = $(( nb_try + 1))
         fi
