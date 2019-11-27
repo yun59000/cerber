@@ -15,15 +15,22 @@ fi
 installProgram () {
     if ! [ "$1" = "" ]; then
         #---------------------------
-        PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $1|grep "install ok installed")
-        (echo "$timestamp Checking for somelib: $PKG_OK" 2>&1) >> "log.txt"
-        tail -1 "log.txt"
+        if [ "$1" = "docker-machine" ]; then
+            PKG_OK=$($1 -v)
+            (echo "$timestamp Checking for somelib: x$PKG_OK x" 2>&1) >> "log.txt"
+            tail -1 "log.txt"
+        else
+            PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $1|grep "install ok installed")
+            (echo "$timestamp Checking for somelib: $PKG_OK" 2>&1) >> "log.txt"
+            tail -1 "log.txt"
+        fi
+        
         if [ "" == "$PKG_OK" ]; then
             (echo "------------------INSTALL----------------------" 2>&1) >> "log.txt"
             (echo "$timestamp Installing package $1 ------------ " 2>&1) >> "log.txt"
             (echo "-------------------------------------------------" 2>&1) >> "log.txt"
             tail -3 "log.txt"
-            if [ "$1" = "docker-machine" ]; then
+            if [ "$1" = "docker-machine" ] && ! [ "$PKG_OK" = "" ]; then
                 base=https://github.com/docker/machine/releases/download/v0.14.0 && curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine && sudo install /tmp/docker-machine /usr/local/bin/docker-machine
             else
                 apt-get --force-yes --yes install $1
@@ -46,9 +53,10 @@ installProgram () {
 }
 
 installProgram "docker"
-#installProgram "docker-compose"
-#installProgram "curl"
-#installProgram "wget"
+installProgram "docker-compose"
+installProgram "curl"
+installProgram "wget"
+installProgram "docker-machine"
 
 #ajouter l'utilisateur courant au groupe docker
     #recuperer l'utilisateur courant pas le root
@@ -75,8 +83,10 @@ if ! [ "$dockerInGroup" = "" ] && [ "$userInDockerGroup" = "" ]; then
     (echo "$timestamp test after usermod docker" 2>&1) >> "log.txt"
     #adduser "$user" docker
     #refreshing the group file
-    #newgrp "docker"
+    newgrp "docker" >> EOS
     (echo "$timestamp test after newgrp" 2>&1) >> "log.txt"
+    EOS
+    
 else
     if [ "$(cat /etc/group |grep docker |grep $user )" ]; then
         (echo "$timestamp the user already belong to the docker group")
@@ -122,11 +132,9 @@ read
 if [ "$REPLY" = "y" ]; then
     (echo "$timestamp docker compose up" 2>&1) >> "log.txt"
     tail -1 "log.txt"
-    #docker-compose up
+    docker-compose up
     # curl our verifier si le site est up
 else
     (echo "$timestamp see ya !"  2>&1) >> "log.txt"
     tail -1 "log.txt"
 fi
-
-#pb newgrp
