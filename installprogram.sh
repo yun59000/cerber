@@ -113,7 +113,7 @@ else
     fi    
 fi
 
-if [ "$defaultIsDownloaded" = "true" ];then
+if [ "$defaultIsDownloaded" ];then
     echo "on est $(pwd)"
     if ! [ -f "default-with-selenium.yml" ];then
         mv default-with-selenium.yml docker-compose.yml
