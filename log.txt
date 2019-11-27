@@ -1,0 +1,142 @@
+----------------------------------------------------------
+-------------Cerberus-INSTALL------------------
+launch installprogramm
+20191126-180322 Checking for somelib: install ok installed
+----------------------------SKIPPED-----------------------
+20191126-180322 package docker already install ---Skipped 
+----------------------------------------------------------
+-------------Cerberus-INSTALL------------------
+20191126-181017 launch installprogramm
+20191126-181017 Checking for somelib: install ok installed
+----------------------------SKIPPED-----------------------
+20191126-181017 package docker already install ---Skipped 
+----------------------------------------------------------
+-------------Cerberus-INSTALL------------------
+20191126-181848 launch installprogramm
+20191126-181848 Checking for somelib: install ok installed
+----------------------------SKIPPED-----------------------
+20191126-181848 package docker already install ---Skipped 
+----------------------------------------------------------
+-------------Cerberus-INSTALL------------------
+20191126-195442 launch installprogramm
+20191126-195442 Checking for somelib: install ok installed
+----------------------------SKIPPED-----------------------
+20191126-195442 package docker already install ---Skipped 
+----------------------------------------------------------
+20191126-195442 user is : yves
+20191126-195442 the docker group does not exist
+20191126-195442 docker group creation !
+20191126-195442 ready for launch
+20191126-195442 see ya !
+-------------Cerberus-INSTALL------------------
+20191126-200114 launch installprogramm
+20191126-200114 Checking for somelib: install ok installed
+----------------------------SKIPPED-----------------------
+20191126-200114 package docker already install ---Skipped 
+----------------------------------------------------------
+20191126-200114 user is : yves
+20191126-200114 the user yves does not belong to the docker group
+20191126-200114 adding the user yves to the docker group
+-------------Cerberus-INSTALL------------------
+20191126-200717 launch installprogramm
+20191126-200717 Checking for somelib: install ok installed
+----------------------------SKIPPED-----------------------
+20191126-200717 package docker already install ---Skipped 
+----------------------------------------------------------
+20191126-200717 user is : root
+20191126-200717 the user root does not belong to the docker group
+20191126-200717 adding the user root to the docker group
+-------------Cerberus-INSTALL------------------
+20191126-202933 launch installprogramm
+20191126-202933 Checking for somelib: install ok installed
+----------------------------SKIPPED-----------------------
+20191126-202933 package docker already install ---Skipped 
+----------------------------------------------------------
+20191126-202933 user is : root
+20191126-202933 the user root does not belong to the docker group
+20191126-202933 adding the user root to the docker group
+20191126-202933 what to do ?
+20191126-202933 ready for launch
+ready ?
+20191126-202933 docker compose up
+-------------Cerberus-INSTALL------------------
+20191126-203559 launch installprogramm
+20191126-203559 Checking for somelib: install ok installed
+----------------------------SKIPPED-----------------------
+20191126-203559 package docker already install ---Skipped 
+----------------------------------------------------------
+20191126-203559 user is : yves
+20191126-203559 the user yves does not belong to the docker group
+20191126-203559 adding the user yves to the docker group
+-------------Cerberus-INSTALL------------------
+20191126-204212 launch installprogramm
+20191126-204212 Checking for somelib: install ok installed
+----------------------------SKIPPED-----------------------
+20191126-204212 package docker already install ---Skipped 
+----------------------------------------------------------
+20191126-204212 user is : yves
+20191126-204212 the user yves does not belong to the docker group
+20191126-204212 adding the user yves to the docker group
+20191126-204212 test after usermod docker
+20191126-204212 test after newgrp
+-------------Cerberus-INSTALL------------------
+20191126-204446 launch installprogramm
+20191126-204446 Checking for somelib: install ok installed
+----------------------------SKIPPED-----------------------
+20191126-204446 package docker already install ---Skipped 
+----------------------------------------------------------
+20191126-204446 user is : yves
+20191126-204446 the user yves does not belong to the docker group
+20191126-204446 adding the user yves to the docker group
+20191126-204446 test after usermod docker
+20191126-204446 test after newgrp
+-------------Cerberus-INSTALL------------------
+20191126-204732 launch installprogramm
+20191126-204732 Checking for somelib: install ok installed
+----------------------------SKIPPED-----------------------
+20191126-204732 package docker already install ---Skipped 
+----------------------------------------------------------
+20191126-204732 user is : yves
+20191126-204732 the user yves does not belong to the docker group
+20191126-204732 adding the user yves to the docker group
+20191126-204732 test after usermod docker
+20191126-204732 test after newgrp
+-------------Cerberus-INSTALL------------------
+20191126-204819 launch installprogramm
+20191126-204819 Checking for somelib: install ok installed
+----------------------------SKIPPED-----------------------
+20191126-204819 package docker already install ---Skipped 
+----------------------------------------------------------
+20191126-204819 user is : yves
+20191126-204819 the user yves does not belong to the docker group
+20191126-204819 adding the user yves to the docker group
+20191126-204819 test after usermod docker
+20191126-204819 test after newgrp
+-------------Cerberus-INSTALL------------------
+20191126-205919 launch installprogramm
+20191126-205919 Checking for somelib: install ok installed
+----------------------------SKIPPED-----------------------
+20191126-205919 package docker already install ---Skipped 
+----------------------------------------------------------
+20191126-205919 user is : yves
+20191126-205919 the docker group exist, no need to create
+20191126-205919 the user yves does not belong to the docker group
+20191126-205919 adding the user yves to the docker group
+20191126-205919 test after usermod docker
+20191126-205919 test after newgrp
+-------------Cerberus-INSTALL------------------
+20191126-210506 launch installprogramm
+20191126-210506 Checking for somelib: install ok installed
+----------------------------SKIPPED-----------------------
+20191126-210506 package docker already install ---Skipped 
+----------------------------------------------------------
+20191126-210506 user is : yves
+20191126-210506 the docker group exist, no need to create
+-------------Cerberus-INSTALL------------------
+20191126-210911 launch installprogramm
+20191126-210911 Checking for somelib: install ok installed
+----------------------------SKIPPED-----------------------
+20191126-210911 package docker already install ---Skipped 
+----------------------------------------------------------
+20191126-210911 user is : yves
+20191126-210911 the docker group exist, no need to create
