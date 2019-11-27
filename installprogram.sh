@@ -115,7 +115,7 @@ fi
 
 if [ "$defaultIsDownloaded" ];then
     echo "on est $(pwd)"
-    if ! [ -f "default-with-selenium.yml" ];then
+    if ! [ -f "docker-compose.yml" ];then
         mv default-with-selenium.yml docker-compose.yml
         (echo "$timestamp on créer le docker-compose a partir du default-selenium" 2>&1) >> "log.txt"
         tail -1 "log.txt"
