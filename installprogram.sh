@@ -124,7 +124,7 @@ if ! [ -d "${pathToYML}" ]; then
     (echo "----------Cerberus Folder Creation--- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
     tail -4 "${currentPath}/log.txt"
 
-    wget https://raw.githubusercontent.com/cerberustesting/cerberus-source/master/docker/compositions/cerberus-glassfish-mysql/default-with-selenium.yml
+    wget https://raw.githubusercontent.com/cerberustesting/cerberus-source/master/docker/compositions/cerberus-tomcat-mysql/docker-compose-with-selenium.yml
     defaultIsDownloaded=true
 else
     echo "test path IN: ${currentPath} "
@@ -135,8 +135,8 @@ else
         (echo "${timestamp} --we download it--" 2>&1) >> "${currentPath}/log.txt"
         (echo "----------default-with-selenium Download--- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
         tail -4 "${currentPath}/log.txt"
-
-        wget https://raw.githubusercontent.com/cerberustesting/cerberus-source/master/docker/compositions/cerberus-glassfish-mysql/default-with-selenium.yml
+        # docker/compositions/cerberus-tomcat-mysql/docker-compose-with-selenium.yml
+        wget https://raw.githubusercontent.com/cerberustesting/cerberus-source/master/docker/compositions/cerberus-tomcat-mysql/docker-compose-with-selenium.yml
     defaultIsDownloaded=true
     else
         (echo "----------default-with-selenium Download--- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
@@ -192,9 +192,9 @@ if [ "$REPLY" = "y" ]; then
             tail -1 "${currentPath}/log.txt"
             nb_try=30
         else
-            (echo "${timestamp} --------access $(( nb_try * 10 )) sec -----average is 3min : 180 sec--please wait" 2>&1 ) >> "${currentPath}/log.txt"
+            (echo "${timestamp} --------access $(( ${nb_try} * 10 )) sec -----average is 3min : 180 sec--please wait" 2>&1 ) >> "${currentPath}/log.txt"
             tail -1 "${currentPath}/log.txt"
-            nb_try = $(( nb_try + 1))
+            nb_try=$(( ${nb_try} + 1))
         fi
     done
 else
