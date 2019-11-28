@@ -2,7 +2,6 @@
 
 timestamp=`date "+%Y%m%d-%H%M%S"`
 currentPath="$(pwd)"
-echo "test path: $currentPath "
 
 (echo "$timestamp launch installprogramm" 2>&1) >> "$currentPath/log.txt"
 tail -1 "$currentPath/log.txt"
@@ -115,6 +114,7 @@ fi
 defaultIsDownloaded=false
 pathToYML="/home/$user/cerberus/"
 if ! [ -d "$pathToYML" ]; then
+    echo "test path OUT: $currentPath "
     mkdir "$pathToYML"
     cd "$pathToYML"
     
@@ -127,6 +127,7 @@ if ! [ -d "$pathToYML" ]; then
     wget https://raw.githubusercontent.com/cerberustesting/cerberus-source/master/docker/compositions/cerberus-glassfish-mysql/default-with-selenium.yml
     defaultIsDownloaded=true
 else
+    echo "test path IN: $currentPath "
     cd "$pathToYML"
     if ! [ -f "default-with-selenium.yml" ];then
         (echo "----------default-with-selenium Download--- $1 ------------------" 2>&1) >> "$currentPath/log.txt"
