@@ -136,7 +136,8 @@ else
         (echo "----------default-with-selenium Download--- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
         tail -4 "${currentPath}/log.txt"
         # docker/compositions/cerberus-tomcat-mysql/docker-compose-with-selenium.yml
-        wget https://raw.githubusercontent.com/cerberustesting/cerberus-source/master/docker/compositions/cerberus-tomcat-mysql/docker-compose-with-selenium.yml
+        wget https://raw.githubusercontent.com/cerberustesting/cerberus-source/master/docker/compositions/cerberus-tomcat-mysql/docker-compose.yml
+        # wget https://raw.githubusercontent.com/cerberustesting/cerberus-source/master/docker/compositions/cerberus-tomcat-mysql/docker-compose-with-selenium.yml
     defaultIsDownloaded=true
     else
         (echo "----------default-with-selenium Download--- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
@@ -155,7 +156,7 @@ if [ "${defaultIsDownloaded}" ];then
             (echo "${timestamp} docker-compose.yml doesn't exist-- " 2>&1) >> "${currentPath}/log.txt"
             (echo "${timestamp} --Creating docker-compose.yml--" 2>&1) >> "${currentPath}/log.txt"            
             tail -3 "${currentPath}/log.txt"
-        mv default-with-selenium.yml docker-compose.yml
+        mv docker-compose-with-selenium.yml docker-compose.yml
         (echo "${timestamp} on créer le docker-compose a partir du default-selenium" 2>&1) >> "${currentPath}/log.txt"
         (echo "----------docker-compose.yml-CHECK-- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
         tail -2 "${currentPath}/log.txt"
@@ -181,7 +182,7 @@ if [ "$REPLY" = "y" ]; then
     nb_try=0
     while [ "${nb_try}" -lt 30 ]
     do
-       access=$(curl -sL -w "%{http_code}\\n" "http://127.0.0.1:18080/Cerberus" -o /dev/null)
+       access=$(curl -sL -w "%{http_code}\\n" "http://127.0.0.1:8080/Cerberus" -o /dev/null)
             # -s = Silent cURL's output
             # -L = Follow redirects
             # -w = Custom output format
