@@ -138,6 +138,13 @@ else
 
         wget https://raw.githubusercontent.com/cerberustesting/cerberus-source/master/docker/compositions/cerberus-glassfish-mysql/default-with-selenium.yml
     defaultIsDownloaded=true
+    else
+        (echo "----------default-with-selenium Download--- $1 ------------------" 2>&1) >> "$currentPath/log.txt"
+        (echo "$timestamp default-with-selenium.yml already exist-- " 2>&1) >> "$currentPath/log.txt"
+        (echo "$timestamp --no  needs to download it--" 2>&1) >> "$currentPath/log.txt"
+        (echo "----------default-with-selenium Download--- $1 ------------------" 2>&1) >> "$currentPath/log.txt"
+        tail -4 "$currentPath/log.txt"
+        defaultIsDownloaded=true
     fi    
 fi
 
@@ -153,7 +160,7 @@ if [ "$defaultIsDownloaded" ];then
         (echo "----------docker-compose.yml-CHECK-- $1 ------------------" 2>&1) >> "$currentPath/log.txt"
         tail -2 "$currentPath/log.txt"
     else
-        (echo "$timestamp what to do ?"  2>&1) >> "$currentPath/log.txt"
+        (echo "$timestamp docker-compose already exist"  2>&1) >> "$currentPath/log.txt"
         tail -1 "$currentPath/log.txt"
     fi
 fi
