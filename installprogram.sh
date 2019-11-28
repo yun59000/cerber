@@ -160,8 +160,11 @@ if [ "$defaultIsDownloaded" ];then
         (echo "----------docker-compose.yml-CHECK-- $1 ------------------" 2>&1) >> "$currentPath/log.txt"
         tail -2 "$currentPath/log.txt"
     else
-        (echo "$timestamp docker-compose already exist"  2>&1) >> "$currentPath/log.txt"
-        tail -1 "$currentPath/log.txt"
+        (echo "----------docker-compose.yml-CHECK-- $1 ------------------" 2>&1) >> "$currentPath/log.txt"
+        (echo "$timestamp docker-compose already exist-- " 2>&1) >> "$currentPath/log.txt"
+        (echo "$timestamp --no need to create--" 2>&1) >> "$currentPath/log.txt"
+        (echo "----------docker-compose.yml-CHECK-- $1 ------------------" 2>&1) >> "$currentPath/log.txt"
+        tail -4 "$currentPath/log.txt"        
     fi
 fi
 
