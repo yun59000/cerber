@@ -129,15 +129,15 @@ if ! [ -d "${pathToYML}" ]; then
 else
     echo "test path IN: ${currentPath} "
     cd "${pathToYML}"
-    if ! [ -f "default-with-selenium.yml" ];then
+    if ! [ -f "docker-compose-with-selenium.yml" ];then
         (echo "----------default-with-selenium Download--- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
         (echo "${timestamp} default-with-selenium.yml doesn't exist-- " 2>&1) >> "${currentPath}/log.txt"
         (echo "${timestamp} --we download it--" 2>&1) >> "${currentPath}/log.txt"
         (echo "----------default-with-selenium Download--- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
         tail -4 "${currentPath}/log.txt"
         # docker/compositions/cerberus-tomcat-mysql/docker-compose-with-selenium.yml
-        wget https://raw.githubusercontent.com/cerberustesting/cerberus-source/master/docker/compositions/cerberus-tomcat-mysql/docker-compose.yml
-        # wget https://raw.githubusercontent.com/cerberustesting/cerberus-source/master/docker/compositions/cerberus-tomcat-mysql/docker-compose-with-selenium.yml
+        # wget https://raw.githubusercontent.com/cerberustesting/cerberus-source/master/docker/compositions/cerberus-tomcat-mysql/docker-compose.yml
+        wget https://raw.githubusercontent.com/cerberustesting/cerberus-source/master/docker/compositions/cerberus-tomcat-mysql/docker-compose-with-selenium.yml
     defaultIsDownloaded=true
     else
         (echo "----------default-with-selenium Download--- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
