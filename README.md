@@ -12,7 +12,7 @@ this script is working on debian/ubuntu:
 
 clone the repository and launch main.sh with sudo rights
 
-## Go deeper
+## Links
 link to Cerberus website: https://cerberus-testing.com/
 link to Cerberus gihtub: https://github.com/cerberustesting/cerberus-source/
 
