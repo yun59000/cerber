@@ -1,14 +1,12 @@
 #Auto Install Script for the Cerberus-tomcat-mysql Installation on docker: 
 
-this script will install on debian/ubuntu all the prerequisit to install cerberus server:
+this script is working on debian/ubuntu:
 
 - Install docker, docker-compose, wget, curl and docker-machine
  - Add the current user to the docker group
  - Create a cerberus folder at /hom/$user/  called cerberus
  - Download the docker-compose-with-selenium.yml for all in one launch with selenium server
  - Launch the server
-
-[Cerberus](http://www.cerberus-testing.org/) is an user-friendly automated testing framework.
 
 ## Get started
 
