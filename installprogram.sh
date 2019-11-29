@@ -177,7 +177,13 @@ read
 if [ "$REPLY" = "y" ]; then
     (echo "${timestamp} docker compose up" 2>&1) >> "${currentPath}/log.txt"
     tail -1 "${currentPath}/log.txt"
-    docker-compose up
+    
+    # &>/dev/null sets the command’s stdout and stderr to /dev/null instead of inheriting them from the parent process.
+    # & makes the shell run the command in the background.
+    # disown removes the “current” job, last one stopped or put in the background, from under the shell’s job control.
+
+    docker-compose up &>/dev/null & disown
+    
     # curl our verifier si le site est up
     # nb_try=0
     # while [ "${nb_try}" -lt 30 ]
