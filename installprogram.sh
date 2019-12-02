@@ -66,6 +66,7 @@ installProgram "docker-compose"
 installProgram "curl"
 installProgram "wget"
 installProgram "docker-machine"
+installProgram "net-tools"
 
 #ajouter l'utilisateur courant au groupe docker
     #recuperer l'utilisateur courant pas le root
