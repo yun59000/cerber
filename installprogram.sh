@@ -35,7 +35,7 @@ installProgram () {
             if [ "$1" = "docker-machine" ] && ! [ "${PKG_OK}" = "" ]; then
                 base=https://github.com/docker/machine/releases/download/v0.14.0 && curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine && sudo install /tmp/docker-machine /usr/local/bin/docker-machine
             else
-                apt-get --force-yes --yes install $1
+                apt-get install -y $1
             fi            
             if [ "" == "${PKG_OK}" ]; then
                 (echo "---------------------INSTALLED----------------------------" 2>&1) >> "${currentPath}/log.txt"
