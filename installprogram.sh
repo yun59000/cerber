@@ -91,9 +91,10 @@ if ! [ "${dockerInGroup}" = "" ] && [ "${userInDockerGroup}" = "" ]; then
     #adduser "${user}" docker
     #refreshing the group file
     (
-        newgrp docker
-        echo "----------REFRESH-GROUP-LIST CHECK--------------------" &>> "${currentPath}/log.txt"
-        exit 3
+        
+        # newgrp docker
+        sg webdev -c echo "----------REFRESH-GROUP-LIST CHECK--------------------" &>> "${currentPath}/log.txt"
+        # exit 3
     )
 else
     if [ "$(cat /etc/group |grep docker |grep ${user} )" ]; then
