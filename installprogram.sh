@@ -90,7 +90,7 @@ if ! [ "${dockerInGroup}" = "" ] && [ "${userInDockerGroup}" = "" ]; then
     # echo "${timestamp} test after usermod docker" &>> "${currentPath}/log.txt"
     #adduser "${user}" docker
     #refreshing the group file
-    newgrp docker &
+    newgrp docker
         echo "----------REFRESH-GROUP-LIST CHECK--------------------" &>> "${currentPath}/log.txt"
     exit
     
@@ -182,7 +182,7 @@ if [ "${REPLY}" = "y" ]; then
     # disown removes the “current” job, last one stopped or put in the background, from under the shell’s job control.
 
     docker-compose up -d 
-    disown -h
+    # disown -h
 
     # curl our verifier si le site est up
     nb_try=0
@@ -201,7 +201,8 @@ if [ "${REPLY}" = "y" ]; then
         else
             echo "${timestamp} --------access $(( ${nb_try} * 10 )) sec -----average is 3min : 180 sec--please wait" &>> "${currentPath}/log.txt"
             tail -1 "${currentPath}/log.txt"
-            nb_try=$(( ${nb_try} + 1))
+            nb_try=$(( ${nb_try} + 1 ))
+            echo "for test purposes ${nb_try} ---"
         fi
         sleep 10
     done
