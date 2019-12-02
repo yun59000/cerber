@@ -32,17 +32,16 @@ installProgram () {
             echo "${timestamp} Installing package ${1} ------------ " &>> "${currentPath}/log.txt"
             echo "------------------INSTALL----------------------" &>> "${currentPath}/log.txt"
             tail -3 "${currentPath}/log.txt"
-            if [ "${1}" = "docker-machine" ] && ! [ "${PKG_OK}" = "" ]; then
+            if [ "${1}" = "docker-machine" ]; then
                 base=https://github.com/docker/machine/releases/download/v0.14.0 && curl -L ${base}/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine && sudo install /tmp/docker-machine /usr/local/bin/docker-machine
             else
                 apt-get install -y ${1}
             fi            
-            if [ "" == "${PKG_OK}" ]; then
-                echo "---------------------INSTALLED----------------------------" &>> "${currentPath}/log.txt"
-                echo "${timestamp} package ${1} installed Successfully--- " &>> "${currentPath}/log.txt"
-                echo "---------------------INSTALLED----------------------------" &>> "${currentPath}/log.txt"
-                tail -3 "${currentPath}/log.txt"
-            fi
+            echo "---------------------INSTALLED----------------------------" &>> "${currentPath}/log.txt"
+            echo "${timestamp} package ${1} installed Successfully--- " &>> "${currentPath}/log.txt"
+            echo "---------------------INSTALLED----------------------------" &>> "${currentPath}/log.txt"
+            tail -3 "${currentPath}/log.txt"
+           
         else
             echo "----------------------------SKIPPED-----------------------" &>> "${currentPath}/log.txt"
             echo "${timestamp} package ${1} already install ---Skipped " &>> "${currentPath}/log.txt"
