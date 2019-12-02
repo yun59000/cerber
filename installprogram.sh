@@ -18,7 +18,7 @@ installProgram () {
         if [ "${1}" = "docker-machine" ]; then
             PKG_OK=$(${1} -v)
             echo "-----------CHECK--INSTALL---- ${1} ------------------" &>> "${currentPath}/log.txt"
-            echo "${timestamp} Checking for somelib: x${PKG_OK} x" &>> "${currentPath}/log.txt"
+            echo "${timestamp} Checking for somelib: x ${PKG_OK} x" &>> "${currentPath}/log.txt"
             tail -2 "${currentPath}/log.txt"
         else
             PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${1}|grep "install ok installed")
@@ -33,7 +33,7 @@ installProgram () {
             echo "------------------INSTALL----------------------" &>> "${currentPath}/log.txt"
             tail -3 "${currentPath}/log.txt"
             if [ "${1}" = "docker-machine" ] && ! [ "${PKG_OK}" = "" ]; then
-                base=https://github.com/docker/machine/releases/download/v0.14.0 && curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine && sudo install /tmp/docker-machine /usr/local/bin/docker-machine
+                base=https://github.com/docker/machine/releases/download/v0.14.0 && curl -L ${base}/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine && sudo install /tmp/docker-machine /usr/local/bin/docker-machine
             else
                 apt-get install -y ${1}
             fi            
@@ -182,7 +182,7 @@ if [ "${REPLY}" = "y" ]; then
     # & makes the shell run the command in the background.
     # disown removes the “current” job, last one stopped or put in the background, from under the shell’s job control.
 
-    docker-compose up & 
+    docker-compose up -d 
     disown -h
 
     # curl our verifier si le site est up
