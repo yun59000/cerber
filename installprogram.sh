@@ -213,7 +213,7 @@ if [ "${REPLY}" = "y" ]; then
     # & makes the shell run the command in the background.
     # disown removes the “current” job, last one stopped or put in the background, from under the shell’s job control.
 
-    docker-compose up -d 
+    docker-compose up -d &>>/dev/null
     disown -h
 
     # curl our verifier si le site est up
@@ -225,10 +225,11 @@ if [ "${REPLY}" = "y" ]; then
             # -L = Follow redirects
             # -w = Custom output format
             # -o = Redirects the HTML output to /dev/null
-       if [ "${access}" = "200" ]
-       then
+            echo "test access: ${access}"
+       if [ "${access}" = "200" ]; then
             echo "${timestamp} --------Cerberus is Up and Runnin---------" &>> "${currentPath}/log.txt"
             tail -1 "${currentPath}/log.txt"
+            echo "for test purposes in up ${nb_try} ---"
             nb_try=30
         else
             echo "${timestamp} --------access $(( ${nb_try} * 10 )) sec -----average is 3min : 180 sec--please wait" &>> "${currentPath}/log.txt"
