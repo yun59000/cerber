@@ -90,10 +90,11 @@ if ! [ "${dockerInGroup}" = "" ] && [ "${userInDockerGroup}" = "" ]; then
     # echo "${timestamp} test after usermod docker" &>> "${currentPath}/log.txt"
     #adduser "${user}" docker
     #refreshing the group file
-    newgrp docker
+    (
+        newgrp docker
         echo "----------REFRESH-GROUP-LIST CHECK--------------------" &>> "${currentPath}/log.txt"
-    exit
-    
+        exit 3
+    )
 else
     if [ "$(cat /etc/group |grep docker |grep ${user} )" ]; then
         echo "----------USER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
