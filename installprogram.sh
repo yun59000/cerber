@@ -93,7 +93,7 @@ if ! [ "${dockerInGroup}" = "" ] && [ "${userInDockerGroup}" = "" ]; then
     (
         
         # newgrp docker
-        sg webdev -c echo "----------REFRESH-GROUP-LIST CHECK--------------------" &>> "${currentPath}/log.txt"
+        sg docker -c echo "----------REFRESH-GROUP-LIST CHECK--------------------" &>> "${currentPath}/log.txt"
         # exit 3
     )
 else
@@ -184,7 +184,7 @@ if [ "${REPLY}" = "y" ]; then
     # disown removes the “current” job, last one stopped or put in the background, from under the shell’s job control.
 
     docker-compose up -d 
-    # disown -h
+    disown -h
 
     # curl our verifier si le site est up
     nb_try=0
