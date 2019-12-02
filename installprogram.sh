@@ -13,39 +13,39 @@ else
 fi
 
 installProgram () {
-    if ! [ "${1}" = "" ]; then
+    if ! [ "$1" = "" ]; then
         #---------------------------
-        if [ "${1}" = "docker-machine" ]; then
-            PKG_OK=$(${1} -v)
-            (echo "-----------CHECK--INSTALL---- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+        if [ "$1" = "docker-machine" ]; then
+            PKG_OK=$($1 -v)
+            (echo "-----------CHECK--INSTALL---- $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
             (echo "${timestamp} Checking for somelib: x${PKG_OK} x" 2>&1) >> "${currentPath}/log.txt"
             tail -2 "${currentPath}/log.txt"
         else
-            PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${1}|grep "install ok installed")
-            (echo "-----------CHECK--INSTALL---- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+            PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $1|grep "install ok installed")
+            (echo "-----------CHECK--INSTALL---- $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
             (echo "${timestamp} Checking for somelib: ${PKG_OK}" 2>&1) >> "${currentPath}/log.txt"
             tail -2 "${currentPath}/log.txt"
         fi
         
         if [ "" == "${PKG_OK}" ]; then
             (echo "------------------INSTALL----------------------" 2>&1) >> "${currentPath}/log.txt"
-            (echo "${timestamp} Installing package ${1} ------------ " 2>&1) >> "${currentPath}/log.txt"
+            (echo "${timestamp} Installing package $1 ------------ " 2>&1) >> "${currentPath}/log.txt"
             (echo "------------------INSTALL----------------------" 2>&1) >> "${currentPath}/log.txt"
             tail -3 "${currentPath}/log.txt"
-            if [ "${1}" = "docker-machine" ] && ! [ "${PKG_OK}" = "" ]; then
+            if [ "$1" = "docker-machine" ] && ! [ "${PKG_OK}" = "" ]; then
                 base=https://github.com/docker/machine/releases/download/v0.14.0 && curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine && sudo install /tmp/docker-machine /usr/local/bin/docker-machine
             else
-                apt-get --force-yes --yes install ${1}
+                apt-get --force-yes --yes install $1
             fi            
             if [ "" == "${PKG_OK}" ]; then
                 (echo "---------------------INSTALLED----------------------------" 2>&1) >> "${currentPath}/log.txt"
-                (echo "${timestamp} package ${1} installed Successfully--- " 2>&1) >> "${currentPath}/log.txt"
+                (echo "${timestamp} package $1 installed Successfully--- " 2>&1) >> "${currentPath}/log.txt"
                 (echo "---------------------INSTALLED----------------------------" 2>&1) >> "${currentPath}/log.txt"
                 tail -3 "${currentPath}/log.txt"
             fi
         else
             (echo "----------------------------SKIPPED-----------------------" 2>&1) >> "${currentPath}/log.txt"
-            (echo "${timestamp} package ${1} already install ---Skipped " 2>&1) >> "${currentPath}/log.txt"
+            (echo "${timestamp} package $1 already install ---Skipped " 2>&1) >> "${currentPath}/log.txt"
             (echo "----------------------------SKIPPED-----------------------" 2>&1) >> "${currentPath}/log.txt" 
             tail -3 "${currentPath}/log.txt"
         fi
@@ -68,24 +68,24 @@ installProgram "docker-machine"
 dockerInGroup=$(cat /etc/group |grep "docker")
 userInDockerGroup=$(cat /etc/group |grep "docker" |grep "${user}")
 if [ "${dockerInGroup}" = "" ]; then
-    (echo "----------DOCKER-GROUP CHECK------ ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+    (echo "----------DOCKER-GROUP CHECK------ $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
     (echo "${timestamp} the docker group does not exist"  2>&1) >> "${currentPath}/log.txt"
     (echo "${timestamp} docker group creation !"  2>&1) >> "${currentPath}/log.txt"
-    (echo "----------DOCKER-GROUP CHECK------ ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+    (echo "----------DOCKER-GROUP CHECK------ $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
     tail -4 "${currentPath}/log.txt"
     groupadd docker
 else
-    (echo "----------DOCKER-GROUP CHECK------ ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+    (echo "----------DOCKER-GROUP CHECK------ $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
     (echo "${timestamp} the docker group exist, no need to create" 2>&1) >> "${currentPath}/log.txt"
-    (echo "----------DOCKER-GROUP CHECK------ ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+    (echo "----------DOCKER-GROUP CHECK------ $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
     tail -3 "${currentPath}/log.txt"
 fi
 if ! [ "${dockerInGroup}" = "" ] && [ "${user}InDockerGroup" = "" ]; then
     #check if user belong to docker group
-    (echo "----------USER-GROUP CHECK------ ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+    (echo "----------USER-GROUP CHECK------ $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
     (echo "${timestamp} the user ${user} does not belong to the docker group"  2>&1) >> "${currentPath}/log.txt"
     (echo "${timestamp} adding the user ${user} to the docker group"  2>&1) >> "${currentPath}/log.txt"
-    (echo "----------USER-GROUP CHECK------ ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+    (echo "----------USER-GROUP CHECK------ $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
     tail -4 "${currentPath}/log.txt"
     usermod -aG docker ${user}
     # (echo "${timestamp} test after usermod docker" 2>&1) >> "${currentPath}/log.txt"
@@ -97,14 +97,14 @@ if ! [ "${dockerInGroup}" = "" ] && [ "${user}InDockerGroup" = "" ]; then
     
 else
     if [ "$(cat /etc/group |grep docker |grep ${user} )" ]; then
-        (echo "----------USER-GROUP CHECK------ ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+        (echo "----------USER-GROUP CHECK------ $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
         (echo "${timestamp} the user already belong to the docker group" 2>&1) >> "${currentPath}/log.txt"
-        (echo "----------USER-GROUP CHECK------ ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+        (echo "----------USER-GROUP CHECK------ $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
         tail -3 "${currentPath}/log.txt"
     else
-        (echo "----------USER-GROUP CHECK------ ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+        (echo "----------USER-GROUP CHECK------ $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
         (echo "${timestamp} an err occured in group affectation" 2>&1) >> "${currentPath}/log.txt"
-        (echo "----------USER-GROUP CHECK------ ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+        (echo "----------USER-GROUP CHECK------ $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
         tail -3 "${currentPath}/log.txt"
     fi
     
@@ -118,10 +118,10 @@ if ! [ -d "${pathToYML}" ]; then
     mkdir "${pathToYML}"
     cd "${pathToYML}"
     
-    (echo "----------Cerberus Folder Creation--- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+    (echo "----------Cerberus Folder Creation--- $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
     (echo "${timestamp} Cerberus Folder doesn't exist-- " 2>&1) >> "${currentPath}/log.txt"
     (echo "${timestamp} --FOLDER CREATION--" 2>&1) >> "${currentPath}/log.txt"
-    (echo "----------Cerberus Folder Creation--- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+    (echo "----------Cerberus Folder Creation--- $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
     tail -4 "${currentPath}/log.txt"
 
     wget https://raw.githubusercontent.com/cerberustesting/cerberus-source/master/docker/compositions/cerberus-tomcat-mysql/docker-compose-with-selenium.yml
@@ -130,20 +130,20 @@ else
     echo "test path IN: ${currentPath} "
     cd "${pathToYML}"
     if ! [ -f "docker-compose-with-selenium.yml" ];then
-        (echo "----------default-with-selenium Download--- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+        (echo "----------default-with-selenium Download--- $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
         (echo "${timestamp} default-with-selenium.yml doesn't exist-- " 2>&1) >> "${currentPath}/log.txt"
         (echo "${timestamp} --we download it--" 2>&1) >> "${currentPath}/log.txt"
-        (echo "----------default-with-selenium Download--- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+        (echo "----------default-with-selenium Download--- $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
         tail -4 "${currentPath}/log.txt"
         # docker/compositions/cerberus-tomcat-mysql/docker-compose-with-selenium.yml
         # wget https://raw.githubusercontent.com/cerberustesting/cerberus-source/master/docker/compositions/cerberus-tomcat-mysql/docker-compose.yml
         wget https://raw.githubusercontent.com/cerberustesting/cerberus-source/master/docker/compositions/cerberus-tomcat-mysql/docker-compose-with-selenium.yml
     defaultIsDownloaded=true
     else
-        (echo "----------default-with-selenium Download--- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+        (echo "----------default-with-selenium Download--- $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
         (echo "${timestamp} default-with-selenium.yml already exist-- " 2>&1) >> "${currentPath}/log.txt"
         (echo "${timestamp} --no  needs to download it--" 2>&1) >> "${currentPath}/log.txt"
-        (echo "----------default-with-selenium Download--- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+        (echo "----------default-with-selenium Download--- $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
         tail -4 "${currentPath}/log.txt"
         defaultIsDownloaded=true
     fi    
@@ -152,19 +152,19 @@ fi
 if [ "${defaultIsDownloaded}" ];then
     # echo "on est $(pwd)"
     if ! [ -f "docker-compose.yml" ];then
-            (echo "----------docker-compose.yml-CHECK-- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+            (echo "----------docker-compose.yml-CHECK-- $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
             (echo "${timestamp} docker-compose.yml doesn't exist-- " 2>&1) >> "${currentPath}/log.txt"
             (echo "${timestamp} --Creating docker-compose.yml--" 2>&1) >> "${currentPath}/log.txt"            
             tail -3 "${currentPath}/log.txt"
         mv docker-compose-with-selenium.yml docker-compose.yml
         (echo "${timestamp} on créer le docker-compose a partir du default-selenium" 2>&1) >> "${currentPath}/log.txt"
-        (echo "----------docker-compose.yml-CHECK-- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+        (echo "----------docker-compose.yml-CHECK-- $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
         tail -2 "${currentPath}/log.txt"
     else
-        (echo "----------docker-compose.yml-CHECK-- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+        (echo "----------docker-compose.yml-CHECK-- $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
         (echo "${timestamp} docker-compose already exist-- " 2>&1) >> "${currentPath}/log.txt"
         (echo "${timestamp} --no need to create--" 2>&1) >> "${currentPath}/log.txt"
-        (echo "----------docker-compose.yml-CHECK-- ${1} ------------------" 2>&1) >> "${currentPath}/log.txt"
+        (echo "----------docker-compose.yml-CHECK-- $1 ------------------" 2>&1) >> "${currentPath}/log.txt"
         tail -4 "${currentPath}/log.txt"        
     fi
 fi
