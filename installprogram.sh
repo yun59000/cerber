@@ -15,17 +15,17 @@ fi
 installProgram () {
     if ! [ "$1" = "" ]; then
         #---------------------------
-        if [ "$1" = "docker-machine" ]; then
-            PKG_OK=$($1 -v)
-            (echo "-----------CHECK--INSTALL---- $1 ------------------" 2>&1) >> "$currentPath/log.txt"
-            (echo "${timestamp} Checking for somelib: x${PKG_OK} x" 2>&1) >> "$currentPath/log.txt"
-            tail -2 "$currentPath/log.txt"
-        else
-            PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $1|grep "install ok installed")
-            (echo "-----------CHECK--INSTALL---- $1 ------------------" 2>&1) >> "$currentPath/log.txt"
-            (echo "${timestamp} Checking for somelib: ${PKG_OK}" 2>&1) >> "$currentPath/log.txt"
-            tail -2 "$currentPath/log.txt"
-        fi
+        # if [ "$1" = "docker-machine" ]; then
+        #     PKG_OK=$($1 -v)
+        #     (echo "-----------CHECK--INSTALL---- $1 ------------------" 2>&1) >> "$currentPath/log.txt"
+        #     (echo "${timestamp} Checking for somelib: x${PKG_OK} x" 2>&1) >> "$currentPath/log.txt"
+        #     tail -2 "$currentPath/log.txt"
+        # else
+        #     PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $1|grep "install ok installed")
+        #     (echo "-----------CHECK--INSTALL---- $1 ------------------" 2>&1) >> "$currentPath/log.txt"
+        #     (echo "${timestamp} Checking for somelib: ${PKG_OK}" 2>&1) >> "$currentPath/log.txt"
+        #     tail -2 "$currentPath/log.txt"
+        # fi
         
         if [ "" == "${PKG_OK}" ]; then
             (echo "------------------INSTALL----------------------" 2>&1) >> "$currentPath/log.txt"
