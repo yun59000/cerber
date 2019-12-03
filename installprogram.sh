@@ -213,7 +213,7 @@ if [ "${REPLY}" = "y" ]; then
     # & makes the shell run the command in the background.
     # disown removes the “current” job, last one stopped or put in the background, from under the shell’s job control.
 
-    docker-compose up -d &>>/dev/null
+    docker-compose up -d
     disown -h
 
     # curl our verifier si le site est up
