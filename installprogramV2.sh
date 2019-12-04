@@ -68,24 +68,52 @@ installProgram () {
 # installProgram "docker-machine"
 # installProgram "net-tools"
 #-----------------------------------------------------
-YUM_PACKAGE_NAME="docker docker-compose curl wget net-tools"
+YUM_PACKAGE_NAME="curl wget net-tools"
 DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
 
  if cat /etc/*release | grep ^NAME | grep CentOS; then
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $YUM_PACKAGE_NAME on CentOS" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
+    yum check-update
     yum install -y $YUM_PACKAGE_NAME
+    curl -fsSL https://get.docker.com/ | sh
+    #make sure that the daemon start at every server reboot
+    systemctl enable docker
+    # systemctl start docker
+    #install docker-compose
+    curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    #give exec rights
+    chmod +x /usr/local/bin/docker-compose
+
  elif cat /etc/*release | grep ^NAME | grep Red; then
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $YUM_PACKAGE_NAME on RedHat" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
+    yum check-update
     yum install -y $YUM_PACKAGE_NAME
+    curl -fsSL https://get.docker.com/ | sh
+    #make sure that the daemon start at every server reboot
+    systemctl enable docker
+    # systemctl start docker
+    #install docker-compose
+    curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    #give exec rights
+    chmod +x /usr/local/bin/docker-compose
  elif cat /etc/*release | grep ^NAME | grep Fedora; then
     echo "================================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $YUM_PACKAGE_NAME on Fedorea" &>> "${currentPath}/log.txt"
     echo "================================================" &>> "${currentPath}/log.txt"
+    yum check-update
     yum install -y $YUM_PACKAGE_NAME
+    curl -fsSL https://get.docker.com/ | sh
+    #make sure that the daemon start at every server reboot
+    systemctl enable docker
+    # systemctl start docker
+    #install docker-compose
+    curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    #give exec rights
+    chmod +x /usr/local/bin/docker-compose
  elif cat /etc/*release | grep ^NAME | grep Ubuntu; then
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $DEB_PACKAGE_NAME on Ubuntu" &>> "${currentPath}/log.txt"
@@ -124,8 +152,8 @@ echo "=================================================" &>> "${currentPath}/log
 
 base=https://github.com/docker/machine/releases/download/v0.16.0 &&
   curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
-  sudo mv /tmp/docker-machine /usr/local/bin/docker-machine &&
-  chmod +x /usr/local/bin/docker-machine
+  sudo mv /tmp/docker-machine /usr/bin/docker-machine &&grou
+  chmod +x /usr/bin/docker-machine
 #---------install de docker machine-------------------
 #-----------------------------------------------------
 #ajouter l'utilisateur courant au groupe docker
