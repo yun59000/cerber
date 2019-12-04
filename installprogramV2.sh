@@ -72,6 +72,7 @@ YUM_PACKAGE_NAME="curl wget net-tools"
 DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
 
  if cat /etc/*release | grep ^NAME | grep CentOS; then
+    distrib=${"${cat /etc/*release | grep ^NAME | grep CentOS}":5}
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $YUM_PACKAGE_NAME on CentOS" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
@@ -82,13 +83,14 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     curl -fsSL https://get.docker.com/ | sh
     #make sure that the daemon start at every server reboot
     systemctl enable docker
-    # systemctl start docker
+    systemctl start docker
     #install docker-compose
     curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     #give exec rights
     chmod +x /usr/local/bin/docker-compose
 
  elif cat /etc/*release | grep ^NAME | grep Red; then
+    distrib=${"${cat /etc/*release | grep ^NAME | grep Red}":5}
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $YUM_PACKAGE_NAME on RedHat" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
@@ -97,12 +99,13 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     curl -fsSL https://get.docker.com/ | sh
     #make sure that the daemon start at every server reboot
     systemctl enable docker
-    # systemctl start docker
+    systemctl start docker
     #install docker-compose
     curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     #give exec rights
     chmod +x /usr/local/bin/docker-compose
  elif cat /etc/*release | grep ^NAME | grep Fedora; then
+    distrib=${"${cat /etc/*release | grep ^NAME | grep Fedora}":5}
     echo "================================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $YUM_PACKAGE_NAME on Fedorea" &>> "${currentPath}/log.txt"
     echo "================================================" &>> "${currentPath}/log.txt"
@@ -111,30 +114,34 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     curl -fsSL https://get.docker.com/ | sh
     #make sure that the daemon start at every server reboot
     systemctl enable docker
-    # systemctl start docker
+    systemctl start docker
     #install docker-compose
     curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     #give exec rights
     chmod +x /usr/local/bin/docker-compose
  elif cat /etc/*release | grep ^NAME | grep Ubuntu; then
+    distrib=${"${cat /etc/*release | grep ^NAME | grep Ubuntu}":5}
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $DEB_PACKAGE_NAME on Ubuntu" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
     apt-get update
     apt-get install -y $DEB_PACKAGE_NAME
  elif cat /etc/*release | grep ^NAME | grep Debian ; then
+    distrib=${"${cat /etc/*release | grep ^NAME | grep Debian}":5}
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $DEB_PACKAGE_NAME on Debian" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
     apt-get update
     apt-get install -y $DEB_PACKAGE_NAME
  elif cat /etc/*release | grep ^NAME | grep Mint ; then
+    distrib=${"${cat /etc/*release | grep ^NAME | grep Mint}":5}
     echo "=============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $DEB_PACKAGE_NAME on Mint" &>> "${currentPath}/log.txt"
     echo "=============================================" &>> "${currentPath}/log.txt"
     apt-get update
     apt-get install -y $DEB_PACKAGE_NAME
  elif cat /etc/*release | grep ^NAME | grep Knoppix ; then
+    distrib=${"${cat /etc/*release | grep ^NAME | grep Knoppix}":5}
     echo "=================================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $DEB_PACKAGE_NAME on Kanoppix" &>> "${currentPath}/log.txt"
     echo "=================================================" &>> "${currentPath}/log.txt"
@@ -166,8 +173,8 @@ echo "${timestamp} user is : ${user}"  &>> "${currentPath}/log.txt"
 dockerInGroup=$(cat /etc/group |grep "docker")
 userInDockerGroup=$(cat /etc/group |grep "docker" |grep "${user}")
 if [ "${dockerInGroup}" = "" ]; then
-    echo "\n"
-    echo "\n"
+    echo "\n" &>> "${currentPath}/log.txt"
+    echo "\n" &>> "${currentPath}/log.txt"
     echo "----------DOCKER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
     echo "${timestamp} the docker group does not exist"  &>> "${currentPath}/log.txt"
     echo "${timestamp} docker group creation !"  &>> "${currentPath}/log.txt"
@@ -175,8 +182,8 @@ if [ "${dockerInGroup}" = "" ]; then
     tail -6 "${currentPath}/log.txt"
     groupadd docker
 else
-    echo "\n"
-    echo "\n"
+    echo "\n" &>> "${currentPath}/log.txt"
+    echo "\n" &>> "${currentPath}/log.txt"
     echo "----------DOCKER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
     echo "${timestamp} the docker group exist, no need to create" &>> "${currentPath}/log.txt"
     echo "----------DOCKER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
@@ -184,8 +191,8 @@ else
 fi
 if ! [ "${dockerInGroup}" = "" ] && [ "${userInDockerGroup}" = "" ]; then
     #check if user belong to docker group
-    echo "\n"
-    echo "\n"
+    echo "\n" &>> "${currentPath}/log.txt"
+    echo "\n" &>> "${currentPath}/log.txt"
     echo "----------USER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
     echo "${timestamp} the user ${user} does not belong to the docker group"  &>> "${currentPath}/log.txt"
     echo "${timestamp} adding the user ${user} to the docker group"  &>> "${currentPath}/log.txt"
@@ -203,15 +210,15 @@ if ! [ "${dockerInGroup}" = "" ] && [ "${userInDockerGroup}" = "" ]; then
     )
 else
     if [ "$(cat /etc/group |grep docker |grep ${user} )" ]; then
-        echo "\n"
-        echo "\n"
+        echo "\n" &>> "${currentPath}/log.txt"
+        echo "\n" &>> "${currentPath}/log.txt"
         echo "----------USER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
         echo "${timestamp} the user already belong to the docker group" &>> "${currentPath}/log.txt"
         echo "----------USER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
         tail -5 "${currentPath}/log.txt"
     else
-        echo "\n"
-        echo "\n"
+        echo "\n" &>> "${currentPath}/log.txt"
+        echo "\n" &>> "${currentPath}/log.txt"
         echo "----------USER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
         echo "${timestamp} an err occured in group affectation" &>> "${currentPath}/log.txt"
         echo "----------USER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
@@ -228,8 +235,8 @@ if ! [ -d "${pathToYML}" ]; then
     mkdir "${pathToYML}"
     cd "${pathToYML}"
     
-    echo "\n"
-    echo "\n"
+    echo "\n" &>> "${currentPath}/log.txt"
+    echo "\n" &>> "${currentPath}/log.txt"
     echo "----------Cerberus Folder Creation--- ${1} ------------------" &>> "${currentPath}/log.txt"
     echo "${timestamp} Cerberus Folder doesn't exist-- " &>> "${currentPath}/log.txt"
     echo "${timestamp} --FOLDER CREATION--" &>> "${currentPath}/log.txt"
@@ -242,7 +249,7 @@ else
     echo "test path IN: ${currentPath} "
     cd "${pathToYML}"
     if ! [ -f "docker-compose-with-selenium.yml" ];then
-        echo "\n"
+        echo "\n" &>> "${currentPath}/log.txt"
         echo "\n"
         echo "----------default-with-selenium Download--- ${1} ------------------" &>> "${currentPath}/log.txt"
         echo "${timestamp} default-with-selenium.yml doesn't exist-- " &>> "${currentPath}/log.txt"
@@ -256,23 +263,23 @@ else
 
     #-O nom_du_nouveau_fichier pour renomer directement !
     else
-        echo "\n"
-        echo "\n"
+        echo "\n" &>> "${currentPath}/log.txt"
+        echo "\n" &>> "${currentPath}/log.txt"
         echo "----------default-with-selenium Download--- ${1} ------------------" &>> "${currentPath}/log.txt"
         echo "${timestamp} default-with-selenium.yml already exist-- " &>> "${currentPath}/log.txt"
         echo "${timestamp} --no  needs to download it--" &>> "${currentPath}/log.txt"
         echo "----------default-with-selenium Download--- ${1} ------------------" &>> "${currentPath}/log.txt"
         tail -6 "${currentPath}/log.txt"
         defaultIsDownloaded=true
-    fi    
+    fi
 fi
-
+firsttime="yes"
 if [ "$defaultIsDownloaded" ];then
     # echo "on est $(pwd)"
     if ! [ -f "docker-compose.yml" ];then
 
-        echo "\n"
-        echo "\n"
+        echo "\n" &>> "${currentPath}/log.txt"
+        echo "\n" &>> "${currentPath}/log.txt"
         echo "----------docker-compose.yml-CHECK-- ${1} ------------------" &>> "${currentPath}/log.txt"
         echo "${timestamp} docker-compose.yml doesn't exist-- " &>> "${currentPath}/log.txt"
         echo "${timestamp} --Creating docker-compose.yml--" &>> "${currentPath}/log.txt"            
@@ -282,22 +289,50 @@ if [ "$defaultIsDownloaded" ];then
         echo "----------docker-compose.yml-CHECK-- ${1} ------------------" &>> "${currentPath}/log.txt"
         tail -2 "${currentPath}/log.txt"
     else
-        echo "\n"
-        echo "\n"
+        echo "\n" &>> "${currentPath}/log.txt"
+        echo "\n" &>> "${currentPath}/log.txt"
         echo "----------docker-compose.yml-CHECK-- ${1} ------------------" &>> "${currentPath}/log.txt"
         echo "${timestamp} docker-compose already exist-- " &>> "${currentPath}/log.txt"
         echo "${timestamp} --no need to create--" &>> "${currentPath}/log.txt"
         echo "----------docker-compose.yml-CHECK-- ${1} ------------------" &>> "${currentPath}/log.txt"
-        tail -6 "${currentPath}/log.txt"        
+        firsttime="no"
+        tail -6 "${currentPath}/log.txt"
     fi
 fi
 
 #add a control for launch
-echo "${timestamp} ready for launch"  &>> "${currentPath}/log.txt"
-echo "ready ?" &>> "${currentPath}/log.txt"
-tail -2 "${currentPath}/log.txt"
-read
-if [ "${REPLY}" = "y" ]; then
+#check if firsttime = yes or no to ask for reboot or launch the server
+if [ "${firsttime}" = "yes" ] && [ [ "${distrib}" = "CentOS" ] || [ "${distrib}" = "Red" ] || [ "${distrib}" = "Fedora" ] ]; then
+    echo "-------------------------------" &>> "${currentPath}/log.txt"
+    echo "-----------FIRST TIME----------" &>> "${currentPath}/log.txt"
+    echo "-------------------------------" &>> "${currentPath}/log.txt"
+     tail -3 "${currentPath}/log.txt"
+    sudo dnf install -y grubby && \
+    sudo grubby \
+    --update-kernel=ALL \
+    --args="systemd.unified_cgroup_hierarchy=0"    
+    echo "-------------------------------" &>> "${currentPath}/log.txt"
+    echo "----------REBOOT NEEDED--------" &>> "${currentPath}/log.txt"
+    echo "----REBOOT NOW ?(yes , no)-----" &>> "${currentPath}/log.txt"
+    echo "-------------------------------" &>> "${currentPath}/log.txt"
+    tail -4 "${currentPath}/log.txt"
+    read reboot
+    #if first time reboot necessary for fedora env
+    if [ "${reboot}" = "yes" ]; then
+        reboot now
+    else
+        exit 0
+    fi
+else
+    echo "-----------------------------------------------------------" &>> "${currentPath}/log.txt"
+    echo "${timestamp} READY TO lAUNCH"  &>> "${currentPath}/log.txt" &>> "${currentPath}/log.txt"
+    echo "-----------------READY ?(yes, no)" &>> "${currentPath}/log.txt" &>> "${currentPath}/log.txt"
+    echo "-----------------------------------------------------------" &>> "${currentPath}/log.txt"
+    tail -4 "${currentPath}/log.txt"
+    read launch
+fi
+
+if [ "${launch}" = "yes" ]; then
     echo "${timestamp} docker compose up" &>> "${currentPath}/log.txt"
     tail -1 "${currentPath}/log.txt"
     
@@ -317,7 +352,7 @@ if [ "${REPLY}" = "y" ]; then
             # -L = Follow redirects
             # -w = Custom output format
             # -o = Redirects the HTML output to /dev/null
-            echo "test access: ${access}"
+            echo "test access: ${access}" &>> "${currentPath}/log.txt"
        if [ "${access}" = "200" ]; then
             echo "${timestamp} --------Cerberus is Up and Runnin---------" &>> "${currentPath}/log.txt"
             tail -1 "${currentPath}/log.txt"
@@ -336,6 +371,3 @@ else
     echo "${timestamp} see ya !"  &>> "${currentPath}/log.txt"
     tail -1 "${currentPath}/log.txt"
 fi
-
-# 
-
