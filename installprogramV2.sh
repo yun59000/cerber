@@ -75,8 +75,10 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $YUM_PACKAGE_NAME on CentOS" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
+    #update the package database:
     yum check-update
     yum install -y $YUM_PACKAGE_NAME
+    #add the official Docker repository, download the latest version of Docker, and install it:
     curl -fsSL https://get.docker.com/ | sh
     #make sure that the daemon start at every server reboot
     systemctl enable docker
@@ -152,7 +154,7 @@ echo "=================================================" &>> "${currentPath}/log
 
 base=https://github.com/docker/machine/releases/download/v0.16.0 &&
   curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
-  sudo mv /tmp/docker-machine /usr/bin/docker-machine &&grou
+  sudo mv /tmp/docker-machine /usr/bin/docker-machine &&
   chmod +x /usr/bin/docker-machine
 #---------install de docker machine-------------------
 #-----------------------------------------------------
