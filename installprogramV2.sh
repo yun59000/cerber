@@ -72,7 +72,8 @@ YUM_PACKAGE_NAME="curl wget net-tools"
 DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
 
  if cat /etc/*release | grep ^NAME | grep CentOS; then
-    distrib=${"${cat /etc/*release | grep ^NAME | grep CentOS}":5}
+    distribwithname=$(cat /etc/*release | grep ^NAME | grep CentOS)
+    distrib="${distribwithname:5}"
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $YUM_PACKAGE_NAME on CentOS" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
@@ -90,7 +91,8 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     chmod +x /usr/local/bin/docker-compose
 
  elif cat /etc/*release | grep ^NAME | grep Red; then
-    distrib=${"$(cat /etc/*release | grep ^NAME | grep Red)":5}
+    distribwithname=$(cat /etc/*release | grep ^NAME | grep Red)
+    distrib="${distribwithname:5}"
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $YUM_PACKAGE_NAME on RedHat" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
@@ -104,8 +106,9 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     #give exec rights
     chmod +x /usr/local/bin/docker-compose
- elif cat /etc/*release | grep ^NAME | grep Fedora; then
-    distrib=${"$(cat /etc/*release | grep ^NAME | grep Fedora)":5}
+ elif cat /etc/*release | grep ^NAME | grep Fedora; then    
+    distribwithname=$(cat /etc/*release | grep ^NAME | grep Fedora)
+    distrib="${distribwithname:5}"
     echo "================================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $YUM_PACKAGE_NAME on Fedorea" &>> "${currentPath}/log.txt"
     echo "================================================" &>> "${currentPath}/log.txt"
@@ -120,28 +123,32 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     #give exec rights
     chmod +x /usr/local/bin/docker-compose
  elif cat /etc/*release | grep ^NAME | grep Ubuntu; then
-    distrib=${"$(cat /etc/*release | grep ^NAME | grep Ubuntu)":5}
+    distribwithname=$(cat /etc/*release | grep ^NAME | grep Ubuntu)    
+    distrib="${distribwithname:5}"
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $DEB_PACKAGE_NAME on Ubuntu" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
     apt-get update
     apt-get install -y $DEB_PACKAGE_NAME
  elif cat /etc/*release | grep ^NAME | grep Debian ; then
-    distrib=${"$(cat /etc/*release | grep ^NAME | grep Debian)":5}
+    distribwithname=$(cat /etc/*release | grep ^NAME | grep Debian)    
+    distrib="${distribwithname:5}"
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $DEB_PACKAGE_NAME on Debian" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
     apt-get update
     apt-get install -y $DEB_PACKAGE_NAME
  elif cat /etc/*release | grep ^NAME | grep Mint ; then
-    distrib=${"$(cat /etc/*release | grep ^NAME | grep Mint)":5}
+    distribwithname=$(cat /etc/*release | grep ^NAME | grep Mint)    
+    distrib="${distribwithname:5}"
     echo "=============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $DEB_PACKAGE_NAME on Mint" &>> "${currentPath}/log.txt"
     echo "=============================================" &>> "${currentPath}/log.txt"
     apt-get update
     apt-get install -y $DEB_PACKAGE_NAME
  elif cat /etc/*release | grep ^NAME | grep Knoppix ; then
-    distrib=${"$(cat /etc/*release | grep ^NAME | grep Knoppix)":5}
+    distribwithname=$(cat /etc/*release | grep ^NAME | grep Knoppix)    
+    distrib="${distribwithname:5}"
     echo "=================================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $DEB_PACKAGE_NAME on Kanoppix" &>> "${currentPath}/log.txt"
     echo "=================================================" &>> "${currentPath}/log.txt"
