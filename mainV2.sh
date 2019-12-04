@@ -10,5 +10,5 @@ if ((${EUID:-0} || "$(id -u)")); then
 else
   echo "-------------------------Cerberus-INSTALL------------------" &>> "${currentPath}/log.txt" 
   tail -1 "${currentPath}/log.txt"
-  bash installprogram.sh
+  bash installprogramV2.sh
 fi
