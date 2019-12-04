@@ -90,7 +90,7 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     chmod +x /usr/local/bin/docker-compose
 
  elif cat /etc/*release | grep ^NAME | grep Red; then
-    distrib=${"${cat /etc/*release | grep ^NAME | grep Red}":5}
+    distrib=${"$(cat /etc/*release | grep ^NAME | grep Red)":5}
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $YUM_PACKAGE_NAME on RedHat" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
@@ -105,7 +105,7 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     #give exec rights
     chmod +x /usr/local/bin/docker-compose
  elif cat /etc/*release | grep ^NAME | grep Fedora; then
-    distrib=${"${cat /etc/*release | grep ^NAME | grep Fedora}":5}
+    distrib=${"$(cat /etc/*release | grep ^NAME | grep Fedora)":5}
     echo "================================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $YUM_PACKAGE_NAME on Fedorea" &>> "${currentPath}/log.txt"
     echo "================================================" &>> "${currentPath}/log.txt"
@@ -120,28 +120,28 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     #give exec rights
     chmod +x /usr/local/bin/docker-compose
  elif cat /etc/*release | grep ^NAME | grep Ubuntu; then
-    distrib=${"${cat /etc/*release | grep ^NAME | grep Ubuntu}":5}
+    distrib=${"$(cat /etc/*release | grep ^NAME | grep Ubuntu)":5}
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $DEB_PACKAGE_NAME on Ubuntu" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
     apt-get update
     apt-get install -y $DEB_PACKAGE_NAME
  elif cat /etc/*release | grep ^NAME | grep Debian ; then
-    distrib=${"${cat /etc/*release | grep ^NAME | grep Debian}":5}
+    distrib=${"$(cat /etc/*release | grep ^NAME | grep Debian)":5}
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $DEB_PACKAGE_NAME on Debian" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
     apt-get update
     apt-get install -y $DEB_PACKAGE_NAME
  elif cat /etc/*release | grep ^NAME | grep Mint ; then
-    distrib=${"${cat /etc/*release | grep ^NAME | grep Mint}":5}
+    distrib=${"$(cat /etc/*release | grep ^NAME | grep Mint)":5}
     echo "=============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $DEB_PACKAGE_NAME on Mint" &>> "${currentPath}/log.txt"
     echo "=============================================" &>> "${currentPath}/log.txt"
     apt-get update
     apt-get install -y $DEB_PACKAGE_NAME
  elif cat /etc/*release | grep ^NAME | grep Knoppix ; then
-    distrib=${"${cat /etc/*release | grep ^NAME | grep Knoppix}":5}
+    distrib=${"$(cat /etc/*release | grep ^NAME | grep Knoppix)":5}
     echo "=================================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $DEB_PACKAGE_NAME on Kanoppix" &>> "${currentPath}/log.txt"
     echo "=================================================" &>> "${currentPath}/log.txt"
@@ -302,7 +302,7 @@ fi
 
 #add a control for launch
 #check if firsttime = yes or no to ask for reboot or launch the server
-if [ "${firsttime}" = "yes" ] && [ [ "${distrib}" = "CentOS" ] || [ "${distrib}" = "Red" ] || [ "${distrib}" = "Fedora" ] ]; then
+if [ "${firsttime}" = "yes" ] && ([ "${distrib}" = "CentOS" ] || [ "${distrib}" = "Red" ] || [ "${distrib}" = "Fedora" ]); then
     echo "-------------------------------" &>> "${currentPath}/log.txt"
     echo "-----------FIRST TIME----------" &>> "${currentPath}/log.txt"
     echo "-------------------------------" &>> "${currentPath}/log.txt"
