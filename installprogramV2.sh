@@ -120,7 +120,12 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
 echo "=================================================" &>> "${currentPath}/log.txt"
 echo "----Installing packages Docker-machine-----------" &>> "${currentPath}/log.txt"
 echo "=================================================" &>> "${currentPath}/log.txt"
-base=https://github.com/docker/machine/releases/download/v0.14.0 && curl -L ${base}/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine && sudo install /tmp/docker-machine /usr/local/bin/docker-machine
+# base=https://github.com/docker/machine/releases/download/v0.14.0 && curl -L ${base}/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine && sudo install /tmp/docker-machine /usr/local/bin/docker-machine
+
+base=https://github.com/docker/machine/releases/download/v0.16.0 &&
+  curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
+  sudo mv /tmp/docker-machine /usr/local/bin/docker-machine &&
+  chmod +x /usr/local/bin/docker-machine
 #---------install de docker machine-------------------
 #-----------------------------------------------------
 #ajouter l'utilisateur courant au groupe docker
