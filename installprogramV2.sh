@@ -3,7 +3,7 @@
 timestamp=`date "+%Y%m%d-%H%M%S"`
 currentPath="$(pwd)"
 
-echo "${timestamp} launch installprogramm" &>> "${currentPath}/log.txt"
+echo "${timestamp} launch installprogramm" &>> "${currentPath}/log.txt" 
 tail -1 "${currentPath}/log.txt"
 #retreive the user name who launch the sudo
 if [ ${SUDO_USER} ]; then 
@@ -12,54 +12,54 @@ else
     user=`whoami`
 fi
 
-installProgram () {
-    if ! [ "${1}" = "" ]; then
-        # ---------------------------
-        if [ "${1}" = "docker-machine" ]; then
-            PKG_OK=$(${1} -v)
-            echo " "
-            echo " "
-            echo "-----------CHECK--INSTALL---- ${1} ------------------" &>> "${currentPath}/log.txt"
-            echo "${timestamp} Checking for somelib: x ${PKG_OK} x" &>> "${currentPath}/log.txt"
-            tail -4 "${currentPath}/log.txt"
-        else
-            PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${1}|grep "install ok installed")
-            echo " "
-            echo " "
-            echo "-----------CHECK--INSTALL---- ${1} ------------------" &>> "${currentPath}/log.txt"
-            echo "${timestamp} Checking for somelib: ${PKG_OK}" &>> "${currentPath}/log.txt"
-            tail -4 "${currentPath}/log.txt"
-        fi
+# installProgram () {
+#     if ! [ "${1}" = "" ]; then
+#         # ---------------------------
+#         if [ "${1}" = "docker-machine" ]; then
+#             PKG_OK=$(${1} -v)
+#             echo " "
+#             echo " "
+#             echo "-----------CHECK--INSTALL---- ${1} ------------------" &>> "${currentPath}/log.txt"
+#             echo "${timestamp} Checking for somelib: x ${PKG_OK} x" &>> "${currentPath}/log.txt"
+#             tail -4 "${currentPath}/log.txt"
+#         else
+#             PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${1}|grep "install ok installed")
+#             echo " "
+#             echo " "
+#             echo "-----------CHECK--INSTALL---- ${1} ------------------" &>> "${currentPath}/log.txt"
+#             echo "${timestamp} Checking for somelib: ${PKG_OK}" &>> "${currentPath}/log.txt"
+#             tail -4 "${currentPath}/log.txt"
+#         fi
         
-        if [ "" == "${PKG_OK}" ]; then
-            echo "------------------INSTALL----------------------" &>> "${currentPath}/log.txt"
-            echo "${timestamp} Installing package ${1} ------------ " &>> "${currentPath}/log.txt"
-            echo "------------------INSTALL----------------------" &>> "${currentPath}/log.txt"
-            tail -3 "${currentPath}/log.txt"
-            if [ "${1}" = "docker-machine" ]; then
-                base=https://github.com/docker/machine/releases/download/v0.14.0 && curl -L ${base}/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine && sudo install /tmp/docker-machine /usr/local/bin/docker-machine
-            else
-                apt-get -y install ${1}
-            fi            
-            echo "---------------------INSTALLED----------------------------" &>> "${currentPath}/log.txt"
-            echo "${timestamp} package ${1} installed Successfully--- " &>> "${currentPath}/log.txt"
-            echo "---------------------INSTALLED----------------------------" &>> "${currentPath}/log.txt"
-            echo " "
-            echo " "
-            tail -5 "${currentPath}/log.txt"
+#         if [ "" == "${PKG_OK}" ]; then
+#             echo "------------------INSTALL----------------------" &>> "${currentPath}/log.txt"
+#             echo "${timestamp} Installing package ${1} ------------ " &>> "${currentPath}/log.txt"
+#             echo "------------------INSTALL----------------------" &>> "${currentPath}/log.txt"
+#             tail -3 "${currentPath}/log.txt"
+#             if [ "${1}" = "docker-machine" ]; then
+#                 base=https://github.com/docker/machine/releases/download/v0.14.0 && curl -L ${base}/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine && sudo install /tmp/docker-machine /usr/local/bin/docker-machine
+#             else
+#                 apt-get -y install ${1}
+#             fi            
+#             echo "---------------------INSTALLED----------------------------" &>> "${currentPath}/log.txt"
+#             echo "${timestamp} package ${1} installed Successfully--- " &>> "${currentPath}/log.txt"
+#             echo "---------------------INSTALLED----------------------------" &>> "${currentPath}/log.txt"
+#             echo " "
+#             echo " "
+#             tail -5 "${currentPath}/log.txt"
            
-        else
-            echo "----------------------------SKIPPED-----------------------" &>> "${currentPath}/log.txt"
-            echo "${timestamp} package ${1} already install ---Skipped " &>> "${currentPath}/log.txt"
-            echo "----------------------------SKIPPED-----------------------" &>> "${currentPath}/log.txt"
-            echo " "
-            echo " " 
-            tail -5 "${currentPath}/log.txt"
-        fi
+#         else
+#             echo "----------------------------SKIPPED-----------------------" &>> "${currentPath}/log.txt"
+#             echo "${timestamp} package ${1} already install ---Skipped " &>> "${currentPath}/log.txt"
+#             echo "----------------------------SKIPPED-----------------------" &>> "${currentPath}/log.txt"
+#             echo " "
+#             echo " " 
+#             tail -5 "${currentPath}/log.txt"
+#         fi
        
-    fi
+#     fi
     
-}
+# }
 
 # installProgram "docker"
 # installProgram "docker-compose"
@@ -68,8 +68,8 @@ installProgram () {
 # installProgram "docker-machine"
 # installProgram "net-tools"
 #-----------------------------------------------------
-YUM_PACKAGE_NAME="curl wget net-tools"
-DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
+YUM_PACKAGE_NAME="curl wget net-tools openssh-server"
+DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools openssh-server"
 
  if cat /etc/*release | grep ^NAME | grep CentOS; then
     distribwithname=$(cat /etc/*release | grep ^NAME | grep CentOS)
@@ -202,7 +202,22 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     echo "OS NOT DETECTED, couldn't install packages" &>> "${currentPath}/log.txt"
     exit 1;
  fi
-
+#---------------------------------------------------
+#save the original ssh config file:
+cp /etc/ssh/sshd_config  /etc/ssh/sshd_config.original_copy
+#start the service:
+if [ "${nc -v -z 127.0.0.1 22 | grep Connected}" ]; then
+    echo "=================================================" &>> "${currentPath}/log.txt"
+    echo "SSH Server up and Running at 127.0.0.1 port 22" &>> "${currentPath}/log.txt"
+    echo "=================================================" &>> "${currentPath}/log.txt"
+    tail -3 "${currentPath}/log.txt"
+else
+    echo "=================================================" &>> "${currentPath}/log.txt"
+    echo "SSH Service starting at 127.0.0.1 at port 22" &>> "${currentPath}/log.txt"
+    echo "=================================================" &>> "${currentPath}/log.txt"
+    tail -3 "${currentPath}/log.txt"
+    systemctl restart sshd.service
+fi
 
 #-----------------------------------------------------
 echo "=================================================" &>> "${currentPath}/log.txt"
@@ -417,7 +432,7 @@ if [ "${launch}" = "yes" ]; then
             # -w = Custom output format
             # -o = Redirects the HTML output to /dev/null
             echo "test access: ${access}" &>> "${currentPath}/log.txt"
-            tail -1 "${currentPath}/log.txt"
+            # tail -1 "${currentPath}/log.txt"
        if [ "${access}" = "200" ]; then
             echo "${timestamp} --------Cerberus is Up and Runnin---------" &>> "${currentPath}/log.txt"
             tail -1 "${currentPath}/log.txt"
