@@ -17,15 +17,15 @@ installProgram () {
         # ---------------------------
         if [ "${1}" = "docker-machine" ]; then
             PKG_OK=$(${1} -v)
-            echo "\n"
-            echo "\n"
+            echo " "
+            echo " "
             echo "-----------CHECK--INSTALL---- ${1} ------------------" &>> "${currentPath}/log.txt"
             echo "${timestamp} Checking for somelib: x ${PKG_OK} x" &>> "${currentPath}/log.txt"
             tail -4 "${currentPath}/log.txt"
         else
             PKG_OK=$(dpkg-query -W --showformat='${Status}\n' ${1}|grep "install ok installed")
-            echo "\n"
-            echo "\n"
+            echo " "
+            echo " "
             echo "-----------CHECK--INSTALL---- ${1} ------------------" &>> "${currentPath}/log.txt"
             echo "${timestamp} Checking for somelib: ${PKG_OK}" &>> "${currentPath}/log.txt"
             tail -4 "${currentPath}/log.txt"
@@ -44,16 +44,16 @@ installProgram () {
             echo "---------------------INSTALLED----------------------------" &>> "${currentPath}/log.txt"
             echo "${timestamp} package ${1} installed Successfully--- " &>> "${currentPath}/log.txt"
             echo "---------------------INSTALLED----------------------------" &>> "${currentPath}/log.txt"
-            echo "\n"
-            echo "\n"
+            echo " "
+            echo " "
             tail -5 "${currentPath}/log.txt"
            
         else
             echo "----------------------------SKIPPED-----------------------" &>> "${currentPath}/log.txt"
             echo "${timestamp} package ${1} already install ---Skipped " &>> "${currentPath}/log.txt"
             echo "----------------------------SKIPPED-----------------------" &>> "${currentPath}/log.txt"
-            echo "\n"
-            echo "\n" 
+            echo " "
+            echo " " 
             tail -5 "${currentPath}/log.txt"
         fi
        
@@ -78,6 +78,7 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     echo "Installing packages $YUM_PACKAGE_NAME on CentOS" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
+    tail -4 "${currentPath}/log.txt"
     #update the package database:
     yum check-update &>/dev/null
     yum install -y $YUM_PACKAGE_NAME
@@ -89,6 +90,7 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
         echo "=======================================================" &>> "${currentPath}/log.txt"
         echo "${timestamp} -- docker already installed  - skipping --"
         echo "=======================================================" &>> "${currentPath}/log.txt"
+        tail -3 "${currentPath}/log.txt"
     fi
     #make sure that the daemon start at every server reboot
     systemctl enable docker
@@ -105,6 +107,7 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     echo "Installing packages $YUM_PACKAGE_NAME on RedHat" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
+    tail -4 "${currentPath}/log.txt"
     #update the package database:
     yum check-update &>/dev/null
     yum install -y $YUM_PACKAGE_NAME
@@ -115,6 +118,7 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
         echo "=======================================================" &>> "${currentPath}/log.txt"
         echo "${timestamp} -- docker already installed  - skipping --"
         echo "=======================================================" &>> "${currentPath}/log.txt"
+        tail -3 "${currentPath}/log.txt"
     fi
     #make sure that the daemon start at every server reboot
     systemctl enable docker
@@ -130,6 +134,7 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     echo "Installing packages $YUM_PACKAGE_NAME on Fedorea" &>> "${currentPath}/log.txt"
     echo "================================================" &>> "${currentPath}/log.txt"
     echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
+    tail -4 "${currentPath}/log.txt"
     #update the package database:
     yum check-update &>/dev/null
     yum install -y $YUM_PACKAGE_NAME
@@ -140,6 +145,7 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
         echo "=======================================================" &>> "${currentPath}/log.txt"
         echo "${timestamp} -- docker already installed  - skipping --"
         echo "=======================================================" &>> "${currentPath}/log.txt"
+        tail -3 "${currentPath}/log.txt"
     fi
     #make sure that the daemon start at every server reboot
     systemctl enable docker
@@ -155,6 +161,7 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     echo "Installing packages $DEB_PACKAGE_NAME on Ubuntu" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
+    tail -4 "${currentPath}/log.txt"
     #update the package database:
     apt-get update &>/dev/null
     apt-get install -y $DEB_PACKAGE_NAME
@@ -165,6 +172,7 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     echo "Installing packages $DEB_PACKAGE_NAME on Debian" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
+    tail -4 "${currentPath}/log.txt"
     #update the package database:
     apt-get update &>/dev/null
     apt-get install -y $DEB_PACKAGE_NAME
@@ -175,6 +183,7 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     echo "Installing packages $DEB_PACKAGE_NAME on Mint" &>> "${currentPath}/log.txt"
     echo "=============================================" &>> "${currentPath}/log.txt"
     echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
+    tail -4 "${currentPath}/log.txt"
     #update the package database:
     apt-get update &>/dev/null
     apt-get install -y $DEB_PACKAGE_NAME
@@ -185,6 +194,7 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     echo "Installing packages $DEB_PACKAGE_NAME on Kanoppix" &>> "${currentPath}/log.txt"
     echo "=================================================" &>> "${currentPath}/log.txt"
     echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
+    tail -4 "${currentPath}/log.txt"
     #update the package database:
     apt-get update &>/dev/null
     apt-get install -y $DEB_PACKAGE_NAME
@@ -198,12 +208,24 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
 echo "=================================================" &>> "${currentPath}/log.txt"
 echo "----Installing packages Docker-machine-----------" &>> "${currentPath}/log.txt"
 echo "=================================================" &>> "${currentPath}/log.txt"
+tail -3 "${currentPath}/log.txt"
 # base=https://github.com/docker/machine/releases/download/v0.14.0 && curl -L ${base}/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine && sudo install /tmp/docker-machine /usr/local/bin/docker-machine
 
-base=https://github.com/docker/machine/releases/download/v0.16.0 &&
-  curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
-  sudo mv /tmp/docker-machine /usr/bin/docker-machine &&
-  chmod +x /usr/bin/docker-machine
+if [ "$(which docker-machine)" = "" ]
+    echo "=======================================================" &>> "${currentPath}/log.txt"
+    echo "${timestamp} -- docker-machine install  - In progress --"
+    echo "=======================================================" &>> "${currentPath}/log.txt"
+    tail -3 "${currentPath}/log.txt"
+    base=https://github.com/docker/machine/releases/download/v0.16.0 &&
+    curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
+    sudo mv /tmp/docker-machine /usr/bin/docker-machine &&
+    chmod +x /usr/bin/docker-machine
+else
+    echo "=======================================================" &>> "${currentPath}/log.txt"
+    echo "${timestamp} -- docker-macine already installed  - skipping --"
+    echo "=======================================================" &>> "${currentPath}/log.txt"
+    tail -3 "${currentPath}/log.txt"
+fi
 #---------install de docker machine-------------------
 #-----------------------------------------------------
 #ajouter l'utilisateur courant au groupe docker
@@ -214,8 +236,8 @@ echo "${timestamp} user is : ${user}"  &>> "${currentPath}/log.txt"
 dockerInGroup=$(cat /etc/group |grep "docker")
 userInDockerGroup=$(cat /etc/group |grep "docker" |grep "${user}")
 if [ "${dockerInGroup}" = "" ]; then
-    echo "\n" &>> "${currentPath}/log.txt"
-    echo "\n" &>> "${currentPath}/log.txt"
+    echo " " &>> "${currentPath}/log.txt"
+    echo " " &>> "${currentPath}/log.txt"
     echo "----------DOCKER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
     echo "${timestamp} the docker group does not exist"  &>> "${currentPath}/log.txt"
     echo "${timestamp} docker group creation !"  &>> "${currentPath}/log.txt"
@@ -223,8 +245,8 @@ if [ "${dockerInGroup}" = "" ]; then
     tail -6 "${currentPath}/log.txt"
     groupadd docker
 else
-    echo "\n" &>> "${currentPath}/log.txt"
-    echo "\n" &>> "${currentPath}/log.txt"
+    echo " " &>> "${currentPath}/log.txt"
+    echo " " &>> "${currentPath}/log.txt"
     echo "----------DOCKER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
     echo "${timestamp} the docker group exist, no need to create" &>> "${currentPath}/log.txt"
     echo "----------DOCKER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
@@ -232,8 +254,8 @@ else
 fi
 if ! [ "${dockerInGroup}" = "" ] && [ "${userInDockerGroup}" = "" ]; then
     #check if user belong to docker group
-    echo "\n" &>> "${currentPath}/log.txt"
-    echo "\n" &>> "${currentPath}/log.txt"
+    echo " " &>> "${currentPath}/log.txt"
+    echo " " &>> "${currentPath}/log.txt"
     echo "----------USER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
     echo "${timestamp} the user ${user} does not belong to the docker group"  &>> "${currentPath}/log.txt"
     echo "${timestamp} adding the user ${user} to the docker group"  &>> "${currentPath}/log.txt"
@@ -251,15 +273,15 @@ if ! [ "${dockerInGroup}" = "" ] && [ "${userInDockerGroup}" = "" ]; then
     )
 else
     if [ "$(cat /etc/group |grep docker |grep ${user} )" ]; then
-        echo "\n" &>> "${currentPath}/log.txt"
-        echo "\n" &>> "${currentPath}/log.txt"
+        echo " " &>> "${currentPath}/log.txt"
+        echo " " &>> "${currentPath}/log.txt"
         echo "----------USER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
         echo "${timestamp} the user already belong to the docker group" &>> "${currentPath}/log.txt"
         echo "----------USER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
         tail -5 "${currentPath}/log.txt"
     else
-        echo "\n" &>> "${currentPath}/log.txt"
-        echo "\n" &>> "${currentPath}/log.txt"
+        echo " " &>> "${currentPath}/log.txt"
+        echo " " &>> "${currentPath}/log.txt"
         echo "----------USER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
         echo "${timestamp} an err occured in group affectation" &>> "${currentPath}/log.txt"
         echo "----------USER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
@@ -276,8 +298,8 @@ if ! [ -d "${pathToYML}" ]; then
     mkdir "${pathToYML}"
     cd "${pathToYML}"
     
-    echo "\n" &>> "${currentPath}/log.txt"
-    echo "\n" &>> "${currentPath}/log.txt"
+    echo " " &>> "${currentPath}/log.txt"
+    echo " " &>> "${currentPath}/log.txt"
     echo "----------Cerberus Folder Creation--- ${1} ------------------" &>> "${currentPath}/log.txt"
     echo "${timestamp} Cerberus Folder doesn't exist-- " &>> "${currentPath}/log.txt"
     echo "${timestamp} --FOLDER CREATION--" &>> "${currentPath}/log.txt"
@@ -290,8 +312,8 @@ else
     echo "test path IN: ${currentPath} "
     cd "${pathToYML}"
     if ! [ -f "docker-compose-with-selenium.yml" ];then
-        echo "\n" &>> "${currentPath}/log.txt"
-        echo "\n"
+        echo " " &>> "${currentPath}/log.txt"
+        echo " "
         echo "----------default-with-selenium Download--- ${1} ------------------" &>> "${currentPath}/log.txt"
         echo "${timestamp} default-with-selenium.yml doesn't exist-- " &>> "${currentPath}/log.txt"
         echo "${timestamp} --we download it--" &>> "${currentPath}/log.txt"
@@ -304,8 +326,8 @@ else
 
     #-O nom_du_nouveau_fichier pour renomer directement !
     else
-        echo "\n" &>> "${currentPath}/log.txt"
-        echo "\n" &>> "${currentPath}/log.txt"
+        echo " " &>> "${currentPath}/log.txt"
+        echo " " &>> "${currentPath}/log.txt"
         echo "----------default-with-selenium Download--- ${1} ------------------" &>> "${currentPath}/log.txt"
         echo "${timestamp} default-with-selenium.yml already exist-- " &>> "${currentPath}/log.txt"
         echo "${timestamp} --no  needs to download it--" &>> "${currentPath}/log.txt"
@@ -319,8 +341,8 @@ if [ "$defaultIsDownloaded" ];then
     # echo "on est $(pwd)"
     if ! [ -f "docker-compose.yml" ];then
 
-        echo "\n" &>> "${currentPath}/log.txt"
-        echo "\n" &>> "${currentPath}/log.txt"
+        echo " " &>> "${currentPath}/log.txt"
+        echo " " &>> "${currentPath}/log.txt"
         echo "----------docker-compose.yml-CHECK-- ${1} ------------------" &>> "${currentPath}/log.txt"
         echo "${timestamp} docker-compose.yml doesn't exist-- " &>> "${currentPath}/log.txt"
         echo "${timestamp} --Creating docker-compose.yml--" &>> "${currentPath}/log.txt"            
@@ -330,8 +352,8 @@ if [ "$defaultIsDownloaded" ];then
         echo "----------docker-compose.yml-CHECK-- ${1} ------------------" &>> "${currentPath}/log.txt"
         tail -2 "${currentPath}/log.txt"
     else
-        echo "\n" &>> "${currentPath}/log.txt"
-        echo "\n" &>> "${currentPath}/log.txt"
+        echo " " &>> "${currentPath}/log.txt"
+        echo " " &>> "${currentPath}/log.txt"
         echo "----------docker-compose.yml-CHECK-- ${1} ------------------" &>> "${currentPath}/log.txt"
         echo "${timestamp} -- docker-compose already exist------------ " &>> "${currentPath}/log.txt"
         echo "${timestamp} -- no need to create ---------------------- " &>> "${currentPath}/log.txt"
@@ -382,7 +404,7 @@ if [ "${launch}" = "yes" ]; then
     # disown removes the “current” job, last one stopped or put in the background, from under the shell’s job control.
 
     docker-compose up -d &>>/dev/null
-    disown -h
+    disown -h 2>/dev/null
 
     # curl our verifier si le site est up
     nb_try=0
