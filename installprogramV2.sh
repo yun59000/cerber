@@ -77,8 +77,9 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $YUM_PACKAGE_NAME on CentOS" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
+    echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
     #update the package database:
-    yum check-update
+    yum check-update &>/dev/null
     yum install -y $YUM_PACKAGE_NAME
     #add the official Docker repository, download the latest version of Docker, and install it:
     if [ "$(which docker)" = "" ]; then
@@ -103,9 +104,18 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $YUM_PACKAGE_NAME on RedHat" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
-    yum check-update
+    echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
+    #update the package database:
+    yum check-update &>/dev/null
     yum install -y $YUM_PACKAGE_NAME
-    curl -fsSL https://get.docker.com/ | sh
+    if [ "$(which docker)" = "" ]; then
+    
+        curl -fsSL https://get.docker.com/ | sh
+    else
+        echo "=======================================================" &>> "${currentPath}/log.txt"
+        echo "${timestamp} -- docker already installed  - skipping --"
+        echo "=======================================================" &>> "${currentPath}/log.txt"
+    fi
     #make sure that the daemon start at every server reboot
     systemctl enable docker
     systemctl start docker
@@ -119,9 +129,18 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     echo "================================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $YUM_PACKAGE_NAME on Fedorea" &>> "${currentPath}/log.txt"
     echo "================================================" &>> "${currentPath}/log.txt"
-    yum check-update
+    echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
+    #update the package database:
+    yum check-update &>/dev/null
     yum install -y $YUM_PACKAGE_NAME
-    curl -fsSL https://get.docker.com/ | sh
+    if [ "$(which docker)" = "" ]; then
+    
+        curl -fsSL https://get.docker.com/ | sh
+    else
+        echo "=======================================================" &>> "${currentPath}/log.txt"
+        echo "${timestamp} -- docker already installed  - skipping --"
+        echo "=======================================================" &>> "${currentPath}/log.txt"
+    fi
     #make sure that the daemon start at every server reboot
     systemctl enable docker
     systemctl start docker
@@ -135,7 +154,9 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $DEB_PACKAGE_NAME on Ubuntu" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
-    apt-get update
+    echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
+    #update the package database:
+    apt-get update &>/dev/null
     apt-get install -y $DEB_PACKAGE_NAME
  elif cat /etc/*release | grep ^NAME | grep Debian ; then
     distribwithname=$(cat /etc/*release | grep ^NAME | grep Debian)    
@@ -143,7 +164,9 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     echo "===============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $DEB_PACKAGE_NAME on Debian" &>> "${currentPath}/log.txt"
     echo "===============================================" &>> "${currentPath}/log.txt"
-    apt-get update
+    echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
+    #update the package database:
+    apt-get update &>/dev/null
     apt-get install -y $DEB_PACKAGE_NAME
  elif cat /etc/*release | grep ^NAME | grep Mint ; then
     distribwithname=$(cat /etc/*release | grep ^NAME | grep Mint)    
@@ -151,7 +174,9 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     echo "=============================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $DEB_PACKAGE_NAME on Mint" &>> "${currentPath}/log.txt"
     echo "=============================================" &>> "${currentPath}/log.txt"
-    apt-get update
+    echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
+    #update the package database:
+    apt-get update &>/dev/null
     apt-get install -y $DEB_PACKAGE_NAME
  elif cat /etc/*release | grep ^NAME | grep Knoppix ; then
     distribwithname=$(cat /etc/*release | grep ^NAME | grep Knoppix)    
@@ -159,7 +184,9 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     echo "=================================================" &>> "${currentPath}/log.txt"
     echo "Installing packages $DEB_PACKAGE_NAME on Kanoppix" &>> "${currentPath}/log.txt"
     echo "=================================================" &>> "${currentPath}/log.txt"
-    apt-get update
+    echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
+    #update the package database:
+    apt-get update &>/dev/null
     apt-get install -y $DEB_PACKAGE_NAME
  else
     echo "OS NOT DETECTED, couldn't install packages" &>> "${currentPath}/log.txt"
