@@ -404,8 +404,8 @@ if [ "${launch}" = "yes" ]; then
     # & makes the shell run the command in the background.
     # disown removes the “current” job, last one stopped or put in the background, from under the shell’s job control.
 
-    docker-compose up -d &>>/dev/null
-    disown -h 2>/dev/null
+    docker-compose up -d &>>/dev/null &
+    disown -h 2>/dev/null &
 
     # curl our verifier si le site est up
     nb_try=0
