@@ -216,13 +216,15 @@ if [ "$(which docker-machine)" = "" ]
     echo "${timestamp} -- docker-machine install  - In progress --"
     echo "=======================================================" &>> "${currentPath}/log.txt"
     tail -3 "${currentPath}/log.txt"
+
     base=https://github.com/docker/machine/releases/download/v0.16.0 &&
     curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
     sudo mv /tmp/docker-machine /usr/bin/docker-machine &&
     chmod +x /usr/bin/docker-machine
-else
+    
+ else
     echo "=======================================================" &>> "${currentPath}/log.txt"
-    echo "${timestamp} -- docker-macine already installed  - skipping --"
+    echo "${timestamp} -- docker-machine already installed  - skipping --"
     echo "=======================================================" &>> "${currentPath}/log.txt"
     tail -3 "${currentPath}/log.txt"
 fi
@@ -375,7 +377,7 @@ if [ "${firsttime}" = "yes" ] && ([ "${distrib}" = "CentOS" ] || [ "${distrib}" 
     --update-kernel=ALL \
     --args="systemd.unified_cgroup_hierarchy=0"    
     echo "-------------------------------" &>> "${currentPath}/log.txt"
-    echo "----------REBOOT NEEDED--------" &>> "${currentPath}/log.txt"
+    echo "----REBOOT NEEDED---Re-launch the script after-----" &>> "${currentPath}/log.txt"
     echo "----REBOOT NOW ?(yes , no)-----" &>> "${currentPath}/log.txt"
     echo "-------------------------------" &>> "${currentPath}/log.txt"
     tail -4 "${currentPath}/log.txt"
