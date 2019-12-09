@@ -221,8 +221,7 @@ if [ "$(which docker-machine)" = "" ]
     curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine &&
     sudo mv /tmp/docker-machine /usr/bin/docker-machine &&
     chmod +x /usr/bin/docker-machine
-    
- else
+else
     echo "=======================================================" &>> "${currentPath}/log.txt"
     echo "${timestamp} -- docker-machine already installed  - skipping --"
     echo "=======================================================" &>> "${currentPath}/log.txt"
