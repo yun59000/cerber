@@ -206,7 +206,7 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools openssh-server"
 #save the original ssh config file:
 cp /etc/ssh/sshd_config  /etc/ssh/sshd_config.original_copy
 #start the service:
-if [ "${nc -v -z 127.0.0.1 22 | grep Connected}" ]; then
+if [ "$(nc -v -z 127.0.0.1 22 | grep Connected)" ]; then
     echo "=================================================" &>> "${currentPath}/log.txt"
     echo "SSH Server up and Running at 127.0.0.1 port 22" &>> "${currentPath}/log.txt"
     echo "=================================================" &>> "${currentPath}/log.txt"
