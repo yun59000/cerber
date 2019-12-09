@@ -81,7 +81,14 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools"
     yum check-update
     yum install -y $YUM_PACKAGE_NAME
     #add the official Docker repository, download the latest version of Docker, and install it:
-    curl -fsSL https://get.docker.com/ | sh
+    if [ "$(which docker)" = "" ]; then
+    
+        curl -fsSL https://get.docker.com/ | sh
+    else
+        echo "=======================================================" &>> "${currentPath}/log.txt"
+        echo "${timestamp} -- docker already installed  - skipping --"
+        echo "=======================================================" &>> "${currentPath}/log.txt"
+    fi
     #make sure that the daemon start at every server reboot
     systemctl enable docker
     systemctl start docker
@@ -299,9 +306,9 @@ if [ "$defaultIsDownloaded" ];then
         echo "\n" &>> "${currentPath}/log.txt"
         echo "\n" &>> "${currentPath}/log.txt"
         echo "----------docker-compose.yml-CHECK-- ${1} ------------------" &>> "${currentPath}/log.txt"
-        echo "${timestamp} docker-compose already exist-- " &>> "${currentPath}/log.txt"
-        echo "${timestamp} --no need to create--" &>> "${currentPath}/log.txt"
-        echo "----------docker-compose.yml-CHECK-- ${1} ------------------" &>> "${currentPath}/log.txt"
+        echo "${timestamp} -- docker-compose already exist------------ " &>> "${currentPath}/log.txt"
+        echo "${timestamp} -- no need to create ---------------------- " &>> "${currentPath}/log.txt"
+        echo "----------docker-compose.yml-CHECK--${1}------------------" &>> "${currentPath}/log.txt"
         firsttime="no"
         tail -6 "${currentPath}/log.txt"
     fi
@@ -332,8 +339,8 @@ if [ "${firsttime}" = "yes" ] && ([ "${distrib}" = "CentOS" ] || [ "${distrib}" 
     fi
 else
     echo "-----------------------------------------------------------" &>> "${currentPath}/log.txt"
-    echo "${timestamp} READY TO lAUNCH"  &>> "${currentPath}/log.txt" &>> "${currentPath}/log.txt"
-    echo "-----------------READY ?(yes, no)" &>> "${currentPath}/log.txt" &>> "${currentPath}/log.txt"
+    echo "${timestamp} READY TO lAUNCH ------------------------------"  &>> "${currentPath}/log.txt" &>> "${currentPath}/log.txt"
+    echo "-----------------READY ?(yes, no) -------------------------" &>> "${currentPath}/log.txt" &>> "${currentPath}/log.txt"
     echo "-----------------------------------------------------------" &>> "${currentPath}/log.txt"
     tail -4 "${currentPath}/log.txt"
     read launch
