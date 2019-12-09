@@ -411,7 +411,7 @@ if [ "${launch}" = "yes" ]; then
     nb_try=0
     while [ "${nb_try}" -lt 30 ]
     do
-       access=$(curl -sL -w "%{http_code}\\n" "http://127.0.0.1:8080" -o /dev/null &)
+       access=$(curl -sL -w "%{http_code}\\n" "http://127.0.0.1:8080" -o /dev/null -m 10 &)
             # -s = Silent cURL's output
             # -L = Follow redirects
             # -w = Custom output format
