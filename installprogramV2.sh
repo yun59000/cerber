@@ -211,7 +211,7 @@ echo "=================================================" &>> "${currentPath}/log
 tail -3 "${currentPath}/log.txt"
 # base=https://github.com/docker/machine/releases/download/v0.14.0 && curl -L ${base}/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine && sudo install /tmp/docker-machine /usr/local/bin/docker-machine
 
-if [ "$(which docker-machine)" = "" ]
+if [ "$(which docker-machine)" = "" ]; then
     echo "=======================================================" &>> "${currentPath}/log.txt"
     echo "${timestamp} -- docker-machine install  - In progress --"
     echo "=======================================================" &>> "${currentPath}/log.txt"
