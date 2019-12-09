@@ -411,22 +411,23 @@ if [ "${launch}" = "yes" ]; then
     nb_try=0
     while [ "${nb_try}" -lt 30 ]
     do
-       access=$(curl -sL -w "%{http_code}\\n" "http://127.0.0.1:8080" -o /dev/null)
+       access=$(curl -sL -w "%{http_code}\\n" "http://127.0.0.1:8080" -o /dev/null &)
             # -s = Silent cURL's output
             # -L = Follow redirects
             # -w = Custom output format
             # -o = Redirects the HTML output to /dev/null
             echo "test access: ${access}" &>> "${currentPath}/log.txt"
+            tail -1 "${currentPath}/log.txt"
        if [ "${access}" = "200" ]; then
             echo "${timestamp} --------Cerberus is Up and Runnin---------" &>> "${currentPath}/log.txt"
             tail -1 "${currentPath}/log.txt"
-            echo "for test purposes in up ${nb_try} ---"
+            # echo "for test purposes in up ${nb_try} ---"
             nb_try=30
         else
             echo "${timestamp} --------access $(( ${nb_try} * 10 )) sec -----average is 3min : 180 sec--please wait" &>> "${currentPath}/log.txt"
             tail -1 "${currentPath}/log.txt"
             nb_try=$(( ${nb_try} + 1 ))
-            echo "for test purposes ${nb_try} ---"
+            # echo "for test purposes ${nb_try} ---"
             sleep 10
         fi
         
