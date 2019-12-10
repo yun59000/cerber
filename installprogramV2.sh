@@ -107,7 +107,7 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools openssh-server"
     echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
     tail -4 "${currentPath}/log.txt"
     #update the package database:
-    apt-get update &>/dev/null
+    apt-get update &>/dev/null &
     apt-get install -y $DEB_PACKAGE_NAME
  elif cat /etc/*release | grep ^NAME | grep Debian ; then
     distribwithname=$(cat /etc/*release | grep ^NAME | grep Debian)    
@@ -118,7 +118,7 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools openssh-server"
     echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
     tail -4 "${currentPath}/log.txt"
     #update the package database:
-    apt-get update &>/dev/null
+    apt-get update &>/dev/null &
     apt-get install -y $DEB_PACKAGE_NAME
  elif cat /etc/*release | grep ^NAME | grep Mint ; then
     distribwithname=$(cat /etc/*release | grep ^NAME | grep Mint)    
@@ -129,7 +129,7 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools openssh-server"
     echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
     tail -4 "${currentPath}/log.txt"
     #update the package database:
-    apt-get update &>/dev/null
+    apt-get update &>/dev/null &
     apt-get install -y $DEB_PACKAGE_NAME
  elif cat /etc/*release | grep ^NAME | grep Knoppix ; then
     distribwithname=$(cat /etc/*release | grep ^NAME | grep Knoppix)    
@@ -140,29 +140,35 @@ DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools openssh-server"
     echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
     tail -4 "${currentPath}/log.txt"
     #update the package database:
-    apt-get update &>/dev/null
+    apt-get update &>/dev/null &
     apt-get install -y $DEB_PACKAGE_NAME
  else
     echo "OS NOT DETECTED, couldn't install packages" &>> "${currentPath}/log.txt"
     exit 1;
  fi
 #---------------------------------------------------
-#save the original ssh config file:
-cp /etc/ssh/sshd_config  /etc/ssh/sshd_config.original_copy
-#start the service:
-if [ "$(nc -v -z 127.0.0.1 22 | grep Connected)" ]; then
-    echo "=================================================" &>> "${currentPath}/log.txt"
-    echo "SSH Server up and Running at 127.0.0.1 port 22" &>> "${currentPath}/log.txt"
-    echo "=================================================" &>> "${currentPath}/log.txt"
-    tail -3 "${currentPath}/log.txt"
+if ! [ "$(which ssh)" = "" ]; then
+    #save the original ssh config file:
+    cp /etc/ssh/sshd_config  /etc/ssh/sshd_config.original_copy
+    #start the service:
+    if [ "$(nc -v -z 127.0.0.1 22 | grep Connected)" ]; then
+        echo "=================================================" &>> "${currentPath}/log.txt"
+        echo "SSH Server up and Running at 127.0.0.1 port 22" &>> "${currentPath}/log.txt"
+        echo "=================================================" &>> "${currentPath}/log.txt"
+        tail -3 "${currentPath}/log.txt"
+    else
+        echo "=================================================" &>> "${currentPath}/log.txt"
+        echo "SSH Service starting at 127.0.0.1 at port 22" &>> "${currentPath}/log.txt"
+        echo "=================================================" &>> "${currentPath}/log.txt"
+        tail -3 "${currentPath}/log.txt"
+        systemctl restart sshd.service
+    fi
 else
     echo "=================================================" &>> "${currentPath}/log.txt"
-    echo "SSH Service starting at 127.0.0.1 at port 22" &>> "${currentPath}/log.txt"
+    echo "-----------SSH Server ERROR ---------------------" &>> "${currentPath}/log.txt"
     echo "=================================================" &>> "${currentPath}/log.txt"
     tail -3 "${currentPath}/log.txt"
-    systemctl restart sshd.service
 fi
-
 #-----------------------------------------------------
 echo "=================================================" &>> "${currentPath}/log.txt"
 echo "----Installing packages Docker-machine-----------" &>> "${currentPath}/log.txt"
@@ -186,11 +192,9 @@ else
     echo "=======================================================" &>> "${currentPath}/log.txt"
     tail -3 "${currentPath}/log.txt"
 fi
-#---------install de docker machine-------------------
-#-----------------------------------------------------
+
 #ajouter l'utilisateur courant au groupe docker
     #recuperer l'utilisateur courant pas le root
-
 echo "${timestamp} user is : ${user}"  &>> "${currentPath}/log.txt"
 #check if docker group exist:
 dockerInGroup=$(cat /etc/group |grep "docker")
