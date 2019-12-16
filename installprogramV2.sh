@@ -50,10 +50,10 @@ if cat /etc/*release | grep ^NAME | grep CentOS; then
 installprogramm() {
     for arg in "$@"
     do
-        echo " c'est une ${distrib} "
+        # echo " c'est une ${distrib} "
         distrib="${distrib//\"/}"
-        echo " c'est une ${distrib} "
-        echo "CHECK  ${arg}"
+        # echo " c'est une ${distrib} "
+        # echo "CHECK  ${arg}"
         if [ "$(which ${arg})" = "" ]; then
             #on install
             echo "===============================================" &>> "${currentPath}/log.txt"
@@ -63,7 +63,7 @@ installprogramm() {
 
             if [ "${distrib}" = "CentOS" ] || [ "${distrib}" = "Fedora" ] || [ "${distrib}" = "Red" ]
                 then
-                echo " c'est une ${distrib} in CENTOS"
+                # echo " c'est une ${distrib} in CENTOS"
                 #update the package database:
                 echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
                 yum check-update &>/dev/null
@@ -92,10 +92,10 @@ installprogramm() {
 
             elif [ "${distrib}" = "Ubuntu" ] || [ "${distrib}" = "Debian" ] || [ "${distrib}" = "Mint" ] || [ "${distrib}" = "Knoppix" ]
                 then
-                echo " c'est une ${distrib} UBUNTU "
+                # echo " c'est une ${distrib} UBUNTU "
                 #update:
                 echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
-                apt-get update &>/dev/null
+                apt-get update &> /dev/null
                 #
                 if [ "${arg}" = "docker-machine" ]
                     then
@@ -117,140 +117,6 @@ installprogramm() {
 }
 #-----------------------------------------------------
 installprogramm "docker" "docker-compose" "curl" "wget" "net-tools" "openssh-server"
-# YUM_PACKAGE_NAME="curl wget net-tools openssh-server"
-# DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools openssh-server"
-
-#  if cat /etc/*release | grep ^NAME | grep CentOS; then
-#     distribwithname=$(cat /etc/*release | grep ^NAME | grep CentOS)
-#     distrib="${distribwithname:5}"
-#     echo "===============================================" &>> "${currentPath}/log.txt"
-#     echo "Installing packages $YUM_PACKAGE_NAME on CentOS" &>> "${currentPath}/log.txt"
-#     echo "===============================================" &>> "${currentPath}/log.txt"
-#     echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
-#     tail -4 "${currentPath}/log.txt"
-#     #update the package database:
-#     yum check-update &>/dev/null
-#     yum install -y $YUM_PACKAGE_NAME
-#     #add the official Docker repository, download the latest version of Docker, and install it:
-#     if [ "$(which docker)" = "" ]; then
-    
-#         curl -fsSL https://get.docker.com/ | sh
-#     else
-#         echo "=======================================================" &>> "${currentPath}/log.txt"
-#         echo "${timestamp} -- docker already installed  - skipping --" &>> "${currentPath}/log.txt"
-#         echo "=======================================================" &>> "${currentPath}/log.txt"
-#         tail -3 "${currentPath}/log.txt"
-#     fi
-#     #make sure that the daemon start at every server reboot
-#     systemctl enable docker
-#     systemctl start docker
-#     #install docker-compose
-#     curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-#     #give exec rights
-#     chmod +x /usr/local/bin/docker-compose
-
-#  elif cat /etc/*release | grep ^NAME | grep Red; then
-#     distribwithname=$(cat /etc/*release | grep ^NAME | grep Red)
-#     distrib="${distribwithname:5}"
-#     echo "===============================================" &>> "${currentPath}/log.txt"
-#     echo "Installing packages $YUM_PACKAGE_NAME on RedHat" &>> "${currentPath}/log.txt"
-#     echo "===============================================" &>> "${currentPath}/log.txt"
-#     echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
-#     tail -4 "${currentPath}/log.txt"
-#     #update the package database:
-#     yum check-update &>/dev/null
-#     yum install -y $YUM_PACKAGE_NAME
-#     if [ "$(which docker)" = "" ]; then
-    
-#         curl -fsSL https://get.docker.com/ | sh
-#     else
-#         echo "=======================================================" &>> "${currentPath}/log.txt"
-#         echo "${timestamp} -- docker already installed  - skipping --"
-#         echo "=======================================================" &>> "${currentPath}/log.txt"
-#         tail -3 "${currentPath}/log.txt"
-#     fi
-#     #make sure that the daemon start at every server reboot
-#     systemctl enable docker
-#     systemctl start docker
-#     #install docker-compose
-#     curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-#     #give exec rights
-#     chmod +x /usr/local/bin/docker-compose
-#  elif cat /etc/*release | grep ^NAME | grep Fedora; then    
-#     distribwithname=$(cat /etc/*release | grep ^NAME | grep Fedora)
-#     distrib="${distribwithname:5}"
-#     echo "================================================" &>> "${currentPath}/log.txt"
-#     echo "Installing packages $YUM_PACKAGE_NAME on Fedorea" &>> "${currentPath}/log.txt"
-#     echo "================================================" &>> "${currentPath}/log.txt"
-#     echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
-#     tail -4 "${currentPath}/log.txt"
-#     #update the package database:
-#     yum check-update &>/dev/null
-#     yum install -y $YUM_PACKAGE_NAME
-#     if [ "$(which docker)" = "" ]; then
-    
-#         curl -fsSL https://get.docker.com/ | sh
-#     else
-#         echo "=======================================================" &>> "${currentPath}/log.txt"
-#         echo "${timestamp} -- docker already installed  - skipping --"
-#         echo "=======================================================" &>> "${currentPath}/log.txt"
-#         tail -3 "${currentPath}/log.txt"
-#     fi
-#     #make sure that the daemon start at every server reboot
-#     systemctl enable docker
-#     systemctl start docker
-#     #install docker-compose
-#     curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-#     #give exec rights
-#     chmod +x /usr/local/bin/docker-compose
-#  elif cat /etc/*release | grep ^NAME | grep Ubuntu; then
-#     distribwithname=$(cat /etc/*release | grep ^NAME | grep Ubuntu)    
-#     distrib="${distribwithname:5}"
-#     echo "===============================================" &>> "${currentPath}/log.txt"
-#     echo "Installing packages $DEB_PACKAGE_NAME on Ubuntu" &>> "${currentPath}/log.txt"
-#     echo "===============================================" &>> "${currentPath}/log.txt"
-#     echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
-#     tail -4 "${currentPath}/log.txt"
-#     #update the package database:
-#     apt-get update &>/dev/null &
-#     apt-get install -y $DEB_PACKAGE_NAME
-#  elif cat /etc/*release | grep ^NAME | grep Debian ; then
-#     distribwithname=$(cat /etc/*release | grep ^NAME | grep Debian)    
-#     distrib="${distribwithname:5}"
-#     echo "===============================================" &>> "${currentPath}/log.txt"
-#     echo "Installing packages $DEB_PACKAGE_NAME on Debian" &>> "${currentPath}/log.txt"
-#     echo "===============================================" &>> "${currentPath}/log.txt"
-#     echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
-#     tail -4 "${currentPath}/log.txt"
-#     #update the package database:
-#     apt-get update &>/dev/null &
-#     apt-get install -y $DEB_PACKAGE_NAME
-#  elif cat /etc/*release | grep ^NAME | grep Mint ; then
-#     distribwithname=$(cat /etc/*release | grep ^NAME | grep Mint)    
-#     distrib="${distribwithname:5}"
-#     echo "=============================================" &>> "${currentPath}/log.txt"
-#     echo "Installing packages $DEB_PACKAGE_NAME on Mint" &>> "${currentPath}/log.txt"
-#     echo "=============================================" &>> "${currentPath}/log.txt"
-#     echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
-#     tail -4 "${currentPath}/log.txt"
-#     #update the package database:
-#     apt-get update &>/dev/null &
-#     apt-get install -y $DEB_PACKAGE_NAME
-#  elif cat /etc/*release | grep ^NAME | grep Knoppix ; then
-#     distribwithname=$(cat /etc/*release | grep ^NAME | grep Knoppix)    
-#     distrib="${distribwithname:5}"
-#     echo "=================================================" &>> "${currentPath}/log.txt"
-#     echo "Installing packages $DEB_PACKAGE_NAME on Kanoppix" &>> "${currentPath}/log.txt"
-#     echo "=================================================" &>> "${currentPath}/log.txt"
-#     echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
-#     tail -4 "${currentPath}/log.txt"
-#     #update the package database:
-#     apt-get update &>/dev/null &
-#     apt-get install -y $DEB_PACKAGE_NAME
-#  else
-#     echo "OS NOT DETECTED, couldn't install packages" &>> "${currentPath}/log.txt"
-#     exit 1;
-#  fi
 #---------------------------------------------------
 if ! [ "$(which ssh)" = "" ]
     then
@@ -281,7 +147,6 @@ echo "=================================================" &>> "${currentPath}/log
 echo "----Installing packages Docker-machine-----------" &>> "${currentPath}/log.txt"
 echo "=================================================" &>> "${currentPath}/log.txt"
 tail -3 "${currentPath}/log.txt"
-# base=https://github.com/docker/machine/releases/download/v0.14.0 && curl -L ${base}/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine && sudo install /tmp/docker-machine /usr/local/bin/docker-machine
 
 if [ "$(which docker-machine)" = "" ]
     then
@@ -325,6 +190,7 @@ else
     echo "----------DOCKER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
     tail -5 "${currentPath}/log.txt"
 fi
+
 if ! [ "${dockerInGroup}" = "" ] && [ "${userInDockerGroup}" = "" ]
     then
     #check if user belong to docker group
