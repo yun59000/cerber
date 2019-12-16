@@ -111,7 +111,7 @@ installprogramm() {
 
 }
 #-----------------------------------------------------
-installprogramm "docker docker-compose curl wget net-tools openssh-server"
+installprogramm "docker" "docker-compose" "curl" "wget" "net-tools" "openssh-server"
 # YUM_PACKAGE_NAME="curl wget net-tools openssh-server"
 # DEB_PACKAGE_NAME="docker docker-compose curl wget net-tools openssh-server"
 
