@@ -45,7 +45,7 @@ if cat /etc/*release | grep ^NAME | grep CentOS; then
     echo "OS NOT DETECTED" &>> "${currentPath}/log.txt"
     exit 1;
  fi
-
+echo " c'est une ${distrib} "
 #-----------------------------------------------------
 installprogramm() {
     for arg in "$@"
