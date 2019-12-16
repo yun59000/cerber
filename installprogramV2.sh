@@ -14,31 +14,31 @@ fi
 #-----------------------------------------------------
 if cat /etc/*release | grep ^NAME | grep CentOS; then
     distribwithname=$(cat /etc/*release | grep ^NAME | grep CentOS)
-    distrib=${distribwithname:5}
+    distrib="${distribwithname:5}"
 
  elif cat /etc/*release | grep ^NAME | grep Red; then
     distribwithname=$(cat /etc/*release | grep ^NAME | grep Red)
-    distrib=${distribwithname:5}
+    distrib="${distribwithname:5}"
     
  elif cat /etc/*release | grep ^NAME | grep Fedora; then    
     distribwithname=$(cat /etc/*release | grep ^NAME | grep Fedora)
-    distrib=${distribwithname:5}
+    distrib="${distribwithname:5}"
    
  elif cat /etc/*release | grep ^NAME | grep Ubuntu; then
     distribwithname=$(cat /etc/*release | grep ^NAME | grep Ubuntu)    
-    distrib=${distribwithname:5}
+    distrib="${distribwithname:5}"
     
  elif cat /etc/*release | grep ^NAME | grep Debian ; then
     distribwithname=$(cat /etc/*release | grep ^NAME | grep Debian)    
-    distrib=${distribwithname:5}
+    distrib="${distribwithname:5}"
   
  elif cat /etc/*release | grep ^NAME | grep Mint ; then
     distribwithname=$(cat /etc/*release | grep ^NAME | grep Mint)    
-    distrib=${distribwithname:5}
+    distrib="${distribwithname:5}"
    
  elif cat /etc/*release | grep ^NAME | grep Knoppix ; then
     distribwithname=$(cat /etc/*release | grep ^NAME | grep Knoppix)    
-    distrib=${distribwithname:5}
+    distrib="${distribwithname:5}"
    
  else
     distrib="Unknown"
@@ -50,6 +50,8 @@ if cat /etc/*release | grep ^NAME | grep CentOS; then
 installprogramm() {
     for arg in "$@"
     do
+        echo " c'est une ${distrib} "
+        distrib="${distrib//\"/}"
         echo " c'est une ${distrib} "
         echo "CHECK  ${arg}"
         if [ "$(which ${arg})" = "" ]; then
@@ -120,7 +122,7 @@ installprogramm "docker" "docker-compose" "curl" "wget" "net-tools" "openssh-ser
 
 #  if cat /etc/*release | grep ^NAME | grep CentOS; then
 #     distribwithname=$(cat /etc/*release | grep ^NAME | grep CentOS)
-#     distrib=${distribwithname:5}
+#     distrib="${distribwithname:5}"
 #     echo "===============================================" &>> "${currentPath}/log.txt"
 #     echo "Installing packages $YUM_PACKAGE_NAME on CentOS" &>> "${currentPath}/log.txt"
 #     echo "===============================================" &>> "${currentPath}/log.txt"
@@ -149,7 +151,7 @@ installprogramm "docker" "docker-compose" "curl" "wget" "net-tools" "openssh-ser
 
 #  elif cat /etc/*release | grep ^NAME | grep Red; then
 #     distribwithname=$(cat /etc/*release | grep ^NAME | grep Red)
-#     distrib=${distribwithname:5}
+#     distrib="${distribwithname:5}"
 #     echo "===============================================" &>> "${currentPath}/log.txt"
 #     echo "Installing packages $YUM_PACKAGE_NAME on RedHat" &>> "${currentPath}/log.txt"
 #     echo "===============================================" &>> "${currentPath}/log.txt"
@@ -176,7 +178,7 @@ installprogramm "docker" "docker-compose" "curl" "wget" "net-tools" "openssh-ser
 #     chmod +x /usr/local/bin/docker-compose
 #  elif cat /etc/*release | grep ^NAME | grep Fedora; then    
 #     distribwithname=$(cat /etc/*release | grep ^NAME | grep Fedora)
-#     distrib=${distribwithname:5}
+#     distrib="${distribwithname:5}"
 #     echo "================================================" &>> "${currentPath}/log.txt"
 #     echo "Installing packages $YUM_PACKAGE_NAME on Fedorea" &>> "${currentPath}/log.txt"
 #     echo "================================================" &>> "${currentPath}/log.txt"
@@ -203,7 +205,7 @@ installprogramm "docker" "docker-compose" "curl" "wget" "net-tools" "openssh-ser
 #     chmod +x /usr/local/bin/docker-compose
 #  elif cat /etc/*release | grep ^NAME | grep Ubuntu; then
 #     distribwithname=$(cat /etc/*release | grep ^NAME | grep Ubuntu)    
-#     distrib=${distribwithname:5}
+#     distrib="${distribwithname:5}"
 #     echo "===============================================" &>> "${currentPath}/log.txt"
 #     echo "Installing packages $DEB_PACKAGE_NAME on Ubuntu" &>> "${currentPath}/log.txt"
 #     echo "===============================================" &>> "${currentPath}/log.txt"
@@ -214,7 +216,7 @@ installprogramm "docker" "docker-compose" "curl" "wget" "net-tools" "openssh-ser
 #     apt-get install -y $DEB_PACKAGE_NAME
 #  elif cat /etc/*release | grep ^NAME | grep Debian ; then
 #     distribwithname=$(cat /etc/*release | grep ^NAME | grep Debian)    
-#     distrib=${distribwithname:5}
+#     distrib="${distribwithname:5}"
 #     echo "===============================================" &>> "${currentPath}/log.txt"
 #     echo "Installing packages $DEB_PACKAGE_NAME on Debian" &>> "${currentPath}/log.txt"
 #     echo "===============================================" &>> "${currentPath}/log.txt"
@@ -225,7 +227,7 @@ installprogramm "docker" "docker-compose" "curl" "wget" "net-tools" "openssh-ser
 #     apt-get install -y $DEB_PACKAGE_NAME
 #  elif cat /etc/*release | grep ^NAME | grep Mint ; then
 #     distribwithname=$(cat /etc/*release | grep ^NAME | grep Mint)    
-#     distrib=${distribwithname:5}
+#     distrib="${distribwithname:5}"
 #     echo "=============================================" &>> "${currentPath}/log.txt"
 #     echo "Installing packages $DEB_PACKAGE_NAME on Mint" &>> "${currentPath}/log.txt"
 #     echo "=============================================" &>> "${currentPath}/log.txt"
@@ -236,7 +238,7 @@ installprogramm "docker" "docker-compose" "curl" "wget" "net-tools" "openssh-ser
 #     apt-get install -y $DEB_PACKAGE_NAME
 #  elif cat /etc/*release | grep ^NAME | grep Knoppix ; then
 #     distribwithname=$(cat /etc/*release | grep ^NAME | grep Knoppix)    
-#     distrib=${distribwithname:5}
+#     distrib="${distribwithname:5}"
 #     echo "=================================================" &>> "${currentPath}/log.txt"
 #     echo "Installing packages $DEB_PACKAGE_NAME on Kanoppix" &>> "${currentPath}/log.txt"
 #     echo "=================================================" &>> "${currentPath}/log.txt"
