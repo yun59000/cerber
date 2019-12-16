@@ -45,11 +45,12 @@ if cat /etc/*release | grep ^NAME | grep CentOS; then
     echo "OS NOT DETECTED" &>> "${currentPath}/log.txt"
     exit 1;
  fi
-echo " c'est une ${distrib} "
+
 #-----------------------------------------------------
 installprogramm() {
     for arg in "$@"
     do
+        echo " c'est une ${distrib} "
         echo "CHECK  ${arg}"
         if [ "$(which ${arg})" = "" ]; then
             #on install
@@ -60,6 +61,7 @@ installprogramm() {
 
             if [ "${distrib}" = "CentOS" ] || [ "${distrib}" = "Fedora" ] || [ "${distrib}" = "Red" ]
                 then
+                echo " c'est une ${distrib} in CENTOS"
                 #update the package database:
                 echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
                 yum check-update &>/dev/null
@@ -88,6 +90,7 @@ installprogramm() {
 
             elif [ "${distrib}" = "Ubuntu" ] || [ "${distrib}" = "Debian" ] || [ "${distrib}" = "Mint" ] || [ "${distrib}" = "Knoppix" ]
                 then
+                echo " c'est une ${distrib} UBUNTU "
                 #update:
                 echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
                 apt-get update &>/dev/null
