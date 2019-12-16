@@ -57,17 +57,22 @@ installprogramm() {
             echo "===============================================" &>> "${currentPath}/log.txt"            
             tail -3 "${currentPath}/log.txt"
 
-            if [ "${distrib}" = "CentOS" ] || [ "${distrib}" = "Fedora" ] || [ "${distrib}" = "Red" ]; then
+            if [ "${distrib}" = "CentOS" ] || [ "${distrib}" = "Fedora" ] || [ "${distrib}" = "Red" ]
+                then
                 #update the package database:
                 echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
                 yum check-update &>/dev/null
                 #specific install for docker and docker-compose:
-                if [ "${arg}" = "docker" ];then
-                    if [ "$(which docker)" = "" ]; then    
+                if [ "${arg}" = "docker" ]
+                    then
+                    if [ "$(which docker)" = "" ]
+                        then
                         curl -fsSL https://get.docker.com/ | sh                    
                     fi
-                elif [ "${arg}" = "docker-compose" ]
-                    if [ "$(which docker-compose)" = "" ]; then    
+                elif [ "${arg}" = "docker-compose" ] 
+                    then
+                    if [ "$(which docker-compose)" = "" ]
+                        then
                         #install docker-compose
                         curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
                         #give exec rights
@@ -78,12 +83,15 @@ installprogramm() {
                 #make sure that the daemon start at each server's reboot
                 systemctl enable docker
                 systemctl start docker
-            elif [ "${distrib}" = "Ubuntu" ] || [ "${distrib}" = "Debian" ] || [ "${distrib}" = "Mint" ] || [ "${distrib}" = "Knoppix" ]; then
+
+            elif [ "${distrib}" = "Ubuntu" ] || [ "${distrib}" = "Debian" ] || [ "${distrib}" = "Mint" ] || [ "${distrib}" = "Knoppix" ]
+                then
                 #update:
                 echo "========= Update In progress- Please wait =========" &>> "${currentPath}/log.txt"
                 apt-get update &>/dev/null
                 #
-                if [ "${arg}" = "docker-machine" ]; then
+                if [ "${arg}" = "docker-machine" ]
+                    then
                     base=https://github.com/docker/machine/releases/download/v0.14.0 && curl -L ${base}/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine && sudo install /tmp/docker-machine /usr/local/bin/docker-machine
                 else
                     apt-get -y install ${arg}
@@ -235,11 +243,13 @@ installprogramm "docker docker-compose curl wget net-tools openssh-server"
 #     exit 1;
 #  fi
 #---------------------------------------------------
-if ! [ "$(which ssh)" = "" ]; then
+if ! [ "$(which ssh)" = "" ]
+    then
     #save the original ssh config file:
     cp /etc/ssh/sshd_config  /etc/ssh/sshd_config.original_copy
     #start the service:
-    if [ "$(nc -v -z 127.0.0.1 22 | grep Connected)" ]; then
+    if [ "$(nc -v -z 127.0.0.1 22 | grep Connected)" ]
+        then
         echo "=================================================" &>> "${currentPath}/log.txt"
         echo "SSH Server up and Running at 127.0.0.1 port 22" &>> "${currentPath}/log.txt"
         echo "=================================================" &>> "${currentPath}/log.txt"
@@ -264,7 +274,8 @@ echo "=================================================" &>> "${currentPath}/log
 tail -3 "${currentPath}/log.txt"
 # base=https://github.com/docker/machine/releases/download/v0.14.0 && curl -L ${base}/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine && sudo install /tmp/docker-machine /usr/local/bin/docker-machine
 
-if [ "$(which docker-machine)" = "" ]; then
+if [ "$(which docker-machine)" = "" ]
+    then
     echo "=======================================================" &>> "${currentPath}/log.txt"
     echo "${timestamp} -- docker-machine install  - In progress --"
     echo "=======================================================" &>> "${currentPath}/log.txt"
@@ -287,7 +298,8 @@ echo "${timestamp} user is : ${user}"  &>> "${currentPath}/log.txt"
 #check if docker group exist:
 dockerInGroup=$(cat /etc/group |grep "docker")
 userInDockerGroup=$(cat /etc/group |grep "docker" |grep "${user}")
-if [ "${dockerInGroup}" = "" ]; then
+if [ "${dockerInGroup}" = "" ]
+    then
     echo " " &>> "${currentPath}/log.txt"
     echo " " &>> "${currentPath}/log.txt"
     echo "----------DOCKER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
@@ -304,7 +316,8 @@ else
     echo "----------DOCKER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
     tail -5 "${currentPath}/log.txt"
 fi
-if ! [ "${dockerInGroup}" = "" ] && [ "${userInDockerGroup}" = "" ]; then
+if ! [ "${dockerInGroup}" = "" ] && [ "${userInDockerGroup}" = "" ]
+    then
     #check if user belong to docker group
     echo " " &>> "${currentPath}/log.txt"
     echo " " &>> "${currentPath}/log.txt"
@@ -324,7 +337,8 @@ if ! [ "${dockerInGroup}" = "" ] && [ "${userInDockerGroup}" = "" ]; then
         # exit 3
     )
 else
-    if [ "$(cat /etc/group |grep docker |grep ${user} )" ]; then
+    if [ "$(cat /etc/group |grep docker |grep ${user} )" ]
+        then
         echo " " &>> "${currentPath}/log.txt"
         echo " " &>> "${currentPath}/log.txt"
         echo "----------USER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
@@ -339,13 +353,13 @@ else
         echo "----------USER-GROUP CHECK------ ${1} ------------------" &>> "${currentPath}/log.txt"
         tail -5 "${currentPath}/log.txt"
     fi
-    
 fi
 
 #creation of a cerberus folder on the desktop
 defaultIsDownloaded=false
 pathToYML="/home/${user}/cerberus/"
-if ! [ -d "${pathToYML}" ]; then
+if ! [ -d "${pathToYML}" ]
+    then
     echo "test path OUT: ${currentPath} "
     mkdir "${pathToYML}"
     cd "${pathToYML}"
@@ -363,7 +377,8 @@ if ! [ -d "${pathToYML}" ]; then
 else
     echo "test path IN: ${currentPath} "
     cd "${pathToYML}"
-    if ! [ -f "docker-compose-with-selenium.yml" ];then
+    if ! [ -f "docker-compose-with-selenium.yml" ]
+        then
         echo " " &>> "${currentPath}/log.txt"
         echo " "
         echo "----------default-with-selenium Download--- ${1} ------------------" &>> "${currentPath}/log.txt"
@@ -389,10 +404,11 @@ else
     fi
 fi
 firsttime="yes"
-if [ "$defaultIsDownloaded" ];then
+if [ "$defaultIsDownloaded" ]
+    then
     # echo "on est $(pwd)"
-    if ! [ -f "docker-compose.yml" ];then
-
+    if ! [ -f "docker-compose.yml" ]
+        then
         echo " " &>> "${currentPath}/log.txt"
         echo " " &>> "${currentPath}/log.txt"
         echo "----------docker-compose.yml-CHECK-- ${1} ------------------" &>> "${currentPath}/log.txt"
@@ -417,7 +433,8 @@ fi
 
 #add a control for launch
 #check if firsttime = yes or no to ask for reboot or launch the server
-if [ "${firsttime}" = "yes" ] && ([ "${distrib}" = "CentOS" ] || [ "${distrib}" = "Red" ] || [ "${distrib}" = "Fedora" ]); then
+if [ "${firsttime}" = "yes" ] && ([ "${distrib}" = "CentOS" ] || [ "${distrib}" = "Red" ] || [ "${distrib}" = "Fedora" ])
+    then
     echo "-------------------------------" &>> "${currentPath}/log.txt"
     echo "-----------FIRST TIME----------" &>> "${currentPath}/log.txt"
     echo "-------------------------------" &>> "${currentPath}/log.txt"
@@ -433,7 +450,8 @@ if [ "${firsttime}" = "yes" ] && ([ "${distrib}" = "CentOS" ] || [ "${distrib}" 
     tail -4 "${currentPath}/log.txt"
     read reboot
     #if first time reboot necessary for fedora env
-    if [ "${reboot}" = "yes" ]; then
+    if [ "${reboot}" = "yes" ]
+        then
         reboot now
     else
         exit 0
@@ -447,7 +465,8 @@ else
     read launch
 fi
 
-if [ "${launch}" = "yes" ]; then
+if [ "${launch}" = "yes" ]
+    then
     echo "${timestamp} docker compose up" &>> "${currentPath}/log.txt"
     tail -1 "${currentPath}/log.txt"
     
@@ -469,7 +488,8 @@ if [ "${launch}" = "yes" ]; then
             # -o = Redirects the HTML output to /dev/null
             echo "test access: ${access}" &>> "${currentPath}/log.txt"
             # tail -1 "${currentPath}/log.txt"
-       if [ "${access}" = "200" ]; then
+       if [ "${access}" = "200" ]
+            then
             echo "${timestamp} --------Cerberus is Up and Runnin---------" &>> "${currentPath}/log.txt"
             tail -1 "${currentPath}/log.txt"
             # echo "for test purposes in up ${nb_try} ---"
