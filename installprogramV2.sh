@@ -50,6 +50,7 @@ if cat /etc/*release | grep ^NAME | grep CentOS; then
 installprogramm() {
     for arg in "$@"
     do
+        echo "CHECK  ${arg}"
         if [ "$(which ${arg})" = ""]; then
             #on install
             echo "===============================================" &>> "${currentPath}/log.txt"
