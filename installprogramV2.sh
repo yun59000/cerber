@@ -51,7 +51,7 @@ installprogramm() {
     for arg in "$@"
     do
         echo "CHECK  ${arg}"
-        if [ "$(which ${arg})" = ""]; then
+        if [ "$(which ${arg})" = "" ]; then
             #on install
             echo "===============================================" &>> "${currentPath}/log.txt"
             echo "Installing package ${arg} on ${distrib}" &>> "${currentPath}/log.txt"
