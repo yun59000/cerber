@@ -104,7 +104,9 @@ installprogramm() {
             echo "=======================================================" &>> "${currentPath}/log.txt"
             tail -3 "${currentPath}/log.txt"
         fi
+
     done
+
 }
 #-----------------------------------------------------
 installprogramm "docker docker-compose curl wget net-tools openssh-server"
