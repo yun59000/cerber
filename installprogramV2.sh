@@ -368,7 +368,7 @@ if [ "${launch}" = "yes" ]
             echo "${timestamp} --------Cerberus is Up and Runnin---------" &>> "${currentPath}/log.txt"
             echo "${timestamp} --------@: http://127.0.0.1:8080 ---------" &>> "${currentPath}/log.txt"            
             echo "${timestamp} --------you can close your terminal ---------" &>> "${currentPath}/log.txt"            
-            tail -1 "${currentPath}/log.txt"
+            tail -3 "${currentPath}/log.txt"
             # echo "for test purposes in up ${nb_try} ---"
             nb_try=30
         else
